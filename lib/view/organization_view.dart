@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sdm/blocs/organization_bloc.dart';
 import 'package:sdm/models/organization.dart';
 import 'package:sdm/networking/response.dart';
@@ -12,6 +11,7 @@ import 'package:sdm/widgets/background_decoration.dart';
 import 'package:sdm/widgets/error_alert.dart';
 import 'package:sdm/widgets/list_button.dart';
 import 'package:sdm/widgets/loading.dart';
+// ignore: library_prefixes
 import 'package:sdm/widgets/text_field.dart' as textField;
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -93,6 +93,7 @@ class _OrganizationViewState extends State<OrganizationView> {
       organizationMail,
       organizationPhone1,
       organizationPhone2,
+      organizationWhatsapp,
       organizationAddress1,
       organizationAddress2,
       organizationAddress3,
@@ -112,6 +113,7 @@ class _OrganizationViewState extends State<OrganizationView> {
               organizationMail: organizationMail,
               organizationPhone1: organizationPhone1,
               organizationPhone2: organizationPhone2,
+              organizationWhatsapp: organizationWhatsapp,
               organizationAddress1: organizationAddress1,
               organizationAddress2: organizationAddress2,
               organizationAddress3: organizationAddress3,
@@ -235,6 +237,8 @@ class _OrganizationViewState extends State<OrganizationView> {
                                               organizations.yphone1?.toString() ?? 'Unnamed Route';
                                           final organizationPhone2 =
                                               organizations.yphone2?.toString() ?? 'Unnamed Route';
+                                          final organizationWhatsapp =
+                                              organizations.ywhtapp?.toString() ?? 'Unnamed Route';
                                           final organizationAddress1 =
                                               organizations.yaddressl1?.toString() ?? 'Unnamed Route';
                                           final organizationAddress2 =
@@ -285,6 +289,7 @@ class _OrganizationViewState extends State<OrganizationView> {
                                                           organizationMail,
                                                           organizationPhone1,
                                                           organizationPhone2,
+                                                          organizationWhatsapp,
                                                           organizationAddress1,
                                                           organizationAddress2,
                                                           organizationAddress3,
@@ -311,6 +316,7 @@ class _OrganizationViewState extends State<OrganizationView> {
                                                                   organizationName: organizationName,
                                                                   organizationPhone1: organizationPhone1,
                                                                   organizationPhone2: organizationPhone2,
+                                                                  organizationWhatsapp: organizationWhatsapp,
                                                                   organizationAddress1: organizationAddress1,
                                                                   organizationAddress2: organizationAddress2,
                                                                   organizationAddress3: organizationAddress3,

@@ -1,25 +1,26 @@
 class AddOrganization {
-  AddOrganization({
-    required this.yphone1,
-    required this.yphone2,
-    required this.namebspr,
-    required this.ycustyp,
-    required this.yassigto,
-    required this.nummer,
-    required this.ygpslon,
-    required this.such,
-    required this.yaddressl3,
-    required this.yaddressl4,
-    required this.yaddressl1,
-    required this.yaddressl2,
-    required this.ygpslat,
-    required this.table,
-    required this.yemail,
-    required this.yvisdis
-  });
+  AddOrganization(
+      {required this.yphone1,
+      required this.yphone2,
+      required this.ywhtapp,
+      required this.namebspr,
+      required this.ycustyp,
+      required this.yassigto,
+      required this.nummer,
+      required this.ygpslon,
+      required this.such,
+      required this.yaddressl3,
+      required this.yaddressl4,
+      required this.yaddressl1,
+      required this.yaddressl2,
+      required this.ygpslat,
+      required this.table,
+      required this.yemail,
+      required this.yvisdis});
 
   String yphone1;
   String yphone2;
+  String ywhtapp;
   String namebspr;
   String ycustyp;
   String yassigto;
@@ -35,9 +36,11 @@ class AddOrganization {
   String yemail;
   int yvisdis;
 
-  factory AddOrganization.fromJson(Map<String, dynamic> json) => AddOrganization(
+  factory AddOrganization.fromJson(Map<String, dynamic> json) =>
+      AddOrganization(
         yphone1: json["yphone1"],
         yphone2: json["yphone2"],
+        ywhtapp: json["ywhtapp"],
         namebspr: json["namebspr"],
         ycustyp: json["ycustyp"],
         yassigto: json["yassigto"],
@@ -57,6 +60,7 @@ class AddOrganization {
   Map<String, dynamic> toJson() => {
         "yphone1": yphone1,
         "yphone2": yphone2,
+        "ywhtapp": ywhtapp,
         "namebspr": namebspr,
         "ycustyp": ycustyp,
         "yassigto": yassigto,

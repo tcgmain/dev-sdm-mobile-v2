@@ -18,6 +18,7 @@ class HomeOrganizationView extends StatefulWidget {
   final String organizationName;
   final String organizationPhone1;
   final String organizationPhone2;
+  final String organizationWhatsapp;
   final String organizationAddress1;
   final String organizationAddress2;
   final String organizationAddress3;
@@ -44,6 +45,7 @@ class HomeOrganizationView extends StatefulWidget {
     required this.organizationName,
     required this.organizationPhone1,
     required this.organizationPhone2,
+    required this.organizationWhatsapp,
     required this.organizationAddress1,
     required this.organizationAddress2,
     required this.organizationAddress3,
@@ -92,6 +94,7 @@ class _HomeOrganizationViewState extends State<HomeOrganizationView> {
             organizationName: widget.organizationName,
             organizationPhone1: widget.organizationPhone1,
             organizationPhone2: widget.organizationPhone2,
+            organizationWhatsapp: widget.organizationWhatsapp,
             organizationAddress1: widget.organizationAddress1,
             organizationAddress2: widget.organizationAddress2,
             organizationAddress3: widget.organizationAddress3,

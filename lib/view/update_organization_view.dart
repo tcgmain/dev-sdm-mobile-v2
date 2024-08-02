@@ -25,6 +25,7 @@ class UpdateOrganizationView extends StatefulWidget {
   final String organizationMail;
   final String organizationPhone1;
   final String organizationPhone2;
+  final String organizationWhatsapp;
   final String organizationAddress1;
   final String organizationAddress2;
   final String organizationAddress3;
@@ -43,6 +44,7 @@ class UpdateOrganizationView extends StatefulWidget {
     required this.organizationMail,
     required this.organizationPhone1,
     required this.organizationPhone2,
+    required this.organizationWhatsapp,
     required this.organizationAddress1,
     required this.organizationAddress2,
     required this.organizationAddress3,
@@ -67,6 +69,7 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
   bool _isOrganizationTypeToggleShown = false;
   late String organizationNummer;
   late String organizationSearchWord;
+  // ignore: unused_field
   bool _isOrganizationTypeShown = false;
   late UpdateOrganizationBloc _updateOrganizationBloc;
 
@@ -75,6 +78,7 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
   late TextEditingController _emailController;
   late TextEditingController _phone1Controller;
   late TextEditingController _phone2Controller;
+  late TextEditingController _whatsappController;
   late TextEditingController _address1Controller;
   late TextEditingController _address2Controller;
   late TextEditingController _address3Controller;
@@ -83,6 +87,7 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _phone1FocusNode = FocusNode();
   final FocusNode _phone2FocusNode = FocusNode();
+  final FocusNode _whatsappFocusNode = FocusNode();
   final FocusNode _address1FocusNode = FocusNode();
   final FocusNode _address2FocusNode = FocusNode();
   final FocusNode _address3FocusNode = FocusNode();
@@ -92,6 +97,7 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
     'email': null,
     'phone1': null,
     'phone2': null,
+    'whatsapp': null,
     'address1': null,
     'address2': null,
     'address3': null,
@@ -102,6 +108,7 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
     'email': null,
     'phone1': null,
     'phone2': null,
+    'whatsapp': null,
     'address1': null,
     'address2': null,
     'address3': null,
@@ -114,13 +121,22 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
     setState(() {
       _isCustomerTypeLoading = true;
     });
-    _emailController = TextEditingController(text: widget.organizationMail.toString());
-    _phone1Controller = TextEditingController(text: widget.organizationPhone1.toString());
-    _phone2Controller = TextEditingController(text: widget.organizationPhone2.toString());
-    _address1Controller = TextEditingController(text: widget.organizationAddress1.toString());
-    _address2Controller = TextEditingController(text: widget.organizationAddress2.toString());
-    _address3Controller = TextEditingController(text: widget.organizationAddress3.toString());
-    _address4Controller = TextEditingController(text: widget.organizationAddress4.toString());
+    _emailController =
+        TextEditingController(text: widget.organizationMail.toString());
+    _phone1Controller =
+        TextEditingController(text: widget.organizationPhone1.toString());
+    _phone2Controller =
+        TextEditingController(text: widget.organizationPhone2.toString());
+    _whatsappController =
+        TextEditingController(text: widget.organizationWhatsapp.toString());
+    _address1Controller =
+        TextEditingController(text: widget.organizationAddress1.toString());
+    _address2Controller =
+        TextEditingController(text: widget.organizationAddress2.toString());
+    _address3Controller =
+        TextEditingController(text: widget.organizationAddress3.toString());
+    _address4Controller =
+        TextEditingController(text: widget.organizationAddress4.toString());
 
     _customerTypeBloc = CustomerTypeBloc();
     _customerTypeBloc.getCustomerType();
@@ -136,6 +152,7 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
     _emailController.dispose();
     _phone1Controller.dispose();
     _phone2Controller.dispose();
+    _whatsappController.dispose();
     _address1Controller.dispose();
     _address2Controller.dispose();
     _address3Controller.dispose();
@@ -174,6 +191,10 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
         case 'phone2':
           _validationMessages['phone2'] = null;
           _validationStatus['phone2'] = true;
+          break;
+        case 'whatsapp':
+          _validationMessages['whatsapp'] = null;
+          _validationStatus['whatsapp'] = true;
           break;
         case 'address1':
           _validationMessages['address1'] = null;
@@ -240,7 +261,9 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
                           children: [
                             Text(
                               widget.organizationName,
-                              style: TextStyle(fontSize: getFontSizeLarge(), color: CustomColors.cardTextColor),
+                              style: TextStyle(
+                                  fontSize: getFontSizeLarge(),
+                                  color: CustomColors.cardTextColor),
                             ),
                             updateOrganizationResponse(),
                             const SizedBox(height: 16),
@@ -270,6 +293,15 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
                               fieldName: 'phone2',
                               keyboardType: TextInputType.phone,
                               focusNode: _phone2FocusNode,
+                              validator: (value) => null,
+                            ),
+                              const SizedBox(height: 16),
+                            _buildValidatedTextFormField(
+                              controller: _whatsappController,
+                              label: 'whatsapp',
+                              fieldName: 'whatsapp',
+                              keyboardType: TextInputType.phone,
+                              focusNode: _whatsappFocusNode,
                               validator: (value) => null,
                             ),
                             const SizedBox(height: 16),
@@ -315,29 +347,57 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
                                     _isSuccessMessageShown = false;
                                     _isErrorMessageShown = false;
 
-                                    _phone1Controller.text = capitalizeWords(_phone1Controller.text);
-                                    _phone2Controller.text = capitalizeWords(_phone2Controller.text);
-                                    _address1Controller.text = capitalizeWords(_address1Controller.text);
-                                    _address2Controller.text = capitalizeWords(_address2Controller.text);
-                                    _address3Controller.text = capitalizeWords(_address3Controller.text);
-                                    _address4Controller.text = capitalizeWords(_address4Controller.text);
+                                    _phone1Controller.text =
+                                        capitalizeWords(_phone1Controller.text);
+                                    _phone2Controller.text =
+                                        capitalizeWords(_phone2Controller.text);
+                                    _whatsappController.text =
+                                        capitalizeWords(_whatsappController.text);
+                                    _address1Controller.text = capitalizeWords(
+                                        _address1Controller.text);
+                                    _address2Controller.text = capitalizeWords(
+                                        _address2Controller.text);
+                                    _address3Controller.text = capitalizeWords(
+                                        _address3Controller.text);
+                                    _address4Controller.text = capitalizeWords(
+                                        _address4Controller.text);
 
                                     if (_formKey.currentState!.validate()) {
                                       setState(() {
                                         _isUpdateLoading = true;
                                       });
 
-                                      final customerTypeId = _selectedCustomerType.toString();
-                                      final email = _emailController.text.toString();
-                                      final phone1 = _phone1Controller.text.toString();
-                                      final phone2 = _phone2Controller.text.toString();
-                                      final address1 = _address1Controller.text.toString();
-                                      final address2 = _address2Controller.text.toString();
-                                      final address3 = _address3Controller.text.toString();
-                                      final address4 = _address4Controller.text.toString();
+                                      final customerTypeId =
+                                          _selectedCustomerType.toString();
+                                      final email =
+                                          _emailController.text.toString();
+                                      final phone1 =
+                                          _phone1Controller.text.toString();
+                                      final phone2 =
+                                          _phone2Controller.text.toString();
+                                      final whatsapp =
+                                          _whatsappController.text.toString();
+                                      final address1 =
+                                          _address1Controller.text.toString();
+                                      final address2 =
+                                          _address2Controller.text.toString();
+                                      final address3 =
+                                          _address3Controller.text.toString();
+                                      final address4 =
+                                          _address4Controller.text.toString();
 
-                                      _updateOrganizationBloc.updateOrganization(widget.organizationId, email, phone1,
-                                          phone2, address1, address2, address3, address4, customerTypeId);
+                                      _updateOrganizationBloc
+                                          .updateOrganization(
+                                              widget.organizationId,
+                                              email,
+                                              phone1,
+                                              phone2,
+                                              whatsapp,
+                                              address1,
+                                              address2,
+                                              address3,
+                                              address4,
+                                              customerTypeId);
                                     }
                                   }
                                 },
@@ -415,7 +475,8 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
               _allCustomerTypes = snapshot.data!.data!;
               if (!_isOrganizationTypeToggleShown) {
                 for (int i = 0; i < _allCustomerTypes!.length; i++) {
-                  if (_allCustomerTypes![i].vaufzelemId == widget.organizationTypeId) {
+                  if (_allCustomerTypes![i].vaufzelemId ==
+                      widget.organizationTypeId) {
                     _selectedCustomerTypeIndex = i;
                     _selectedCustomerType = _allCustomerTypes![i].vaufzelemId;
                     break;
@@ -427,7 +488,8 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Organization Type', style: TextStyle(color: CustomColors.cardTextColor1)),
+                  const Text('Organization Type',
+                      style: TextStyle(color: CustomColors.cardTextColor1)),
                   const SizedBox(height: 8),
                   ToggleButtons(
                     color: CustomColors.cardTextColor1,
@@ -441,7 +503,8 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
                     onPressed: (index) {
                       setState(() {
                         _selectedCustomerTypeIndex = index;
-                        _selectedCustomerType = _allCustomerTypes![index].vaufzelemId;
+                        _selectedCustomerType =
+                            _allCustomerTypes![index].vaufzelemId;
                       });
                     },
                     children: _allCustomerTypes!.map((CustomerType type) {
@@ -458,7 +521,8 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
                 setState(() {
                   _isCustomerTypeLoading = false;
                 });
-                showErrorAlertDialog(context, snapshot.data!.message.toString());
+                showErrorAlertDialog(
+                    context, snapshot.data!.message.toString());
               });
               return Container();
           }
@@ -489,7 +553,8 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
               });
               if (!_isSuccessMessageShown) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  showSuccessAlertDialog(context, "${widget.organizationName} has been updated.");
+                  showSuccessAlertDialog(
+                      context, "${widget.organizationName} has been updated.");
                   setState(() {
                     _isSuccessMessageShown = true;
                   });
@@ -505,7 +570,8 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
               });
               if (!_isErrorMessageShown) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  showErrorAlertDialog(context, snapshot.data!.message.toString());
+                  showErrorAlertDialog(
+                      context, snapshot.data!.message.toString());
                   setState(() {
                     _isErrorMessageShown = true;
                   });

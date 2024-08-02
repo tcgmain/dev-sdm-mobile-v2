@@ -74,6 +74,7 @@ class _SubOrganizationViewState extends State<SubOrganizationView> {
       organizationMail,
       organizationPhone1,
       organizationPhone2,
+      organizationWhatsapp,
       organizationAddress1,
       organizationAddress2,
       organizationAddress3,
@@ -93,6 +94,7 @@ class _SubOrganizationViewState extends State<SubOrganizationView> {
               organizationMail: organizationMail,
               organizationPhone1: organizationPhone1,
               organizationPhone2: organizationPhone2,
+              organizationWhatsapp: organizationWhatsapp,
               organizationAddress1: organizationAddress1,
               organizationAddress2: organizationAddress2,
               organizationAddress3: organizationAddress3,
@@ -188,6 +190,8 @@ class _SubOrganizationViewState extends State<SubOrganizationView> {
                                         subOrganizations.yphone1?.toString() ?? 'Unnamed Route';
                                     final subOrganizationPhone2 =
                                         subOrganizations.yphone2?.toString() ?? 'Unnamed Route';
+                                    final subOrganizationWhatsapp =
+                                        subOrganizations.ywhtapp?.toString() ?? 'Unnamed Route';
                                     final subOrganizationAddress1 =
                                         subOrganizations.yaddressl1?.toString() ?? 'Unnamed Route';
                                     final subOrganizationAddress2 =
@@ -236,6 +240,7 @@ class _SubOrganizationViewState extends State<SubOrganizationView> {
                                                     subOrganizationMail,
                                                     subOrganizationPhone1,
                                                     subOrganizationPhone2,
+                                                    subOrganizationWhatsapp,
                                                     subOrganizationAddress1,
                                                     subOrganizationAddress2,
                                                     subOrganizationAddress3,
@@ -260,6 +265,7 @@ class _SubOrganizationViewState extends State<SubOrganizationView> {
                                                       organizationName: subOrganizationName,
                                                       organizationPhone1: subOrganizationPhone1,
                                                       organizationPhone2: subOrganizationPhone2,
+                                                      organizationWhatsapp: subOrganizationWhatsapp,
                                                       organizationAddress1: subOrganizationAddress1,
                                                       organizationAddress2: subOrganizationAddress2,
                                                       organizationAddress3: subOrganizationAddress3,

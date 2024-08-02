@@ -68,6 +68,7 @@ class _AddOrganizationViewState extends State<AddOrganizationView> {
   final _emailController = TextEditingController();
   final _phone1Controller = TextEditingController();
   final _phone2Controller = TextEditingController();
+  final _whatsappController = TextEditingController();
   final _address1Controller = TextEditingController();
   final _address2Controller = TextEditingController();
   final _address3Controller = TextEditingController();
@@ -77,6 +78,7 @@ class _AddOrganizationViewState extends State<AddOrganizationView> {
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _phone1FocusNode = FocusNode();
   final FocusNode _phone2FocusNode = FocusNode();
+  final FocusNode _whatsappFocusNode = FocusNode();
   final FocusNode _address1FocusNode = FocusNode();
   final FocusNode _address2FocusNode = FocusNode();
   final FocusNode _address3FocusNode = FocusNode();
@@ -87,6 +89,7 @@ class _AddOrganizationViewState extends State<AddOrganizationView> {
     'email': null,
     'phone1': null,
     'phone2': null,
+    'whatsapp': null,
     'address1': null,
     'address2': null,
     'address3': null,
@@ -98,6 +101,7 @@ class _AddOrganizationViewState extends State<AddOrganizationView> {
     'email': null,
     'phone1': null,
     'phone2': null,
+    'whatsapp': null,
     'address1': null,
     'address2': null,
     'address3': null,
@@ -131,45 +135,49 @@ class _AddOrganizationViewState extends State<AddOrganizationView> {
     }
 
     // Get the current position
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
     latitude = position.latitude.toString();
     longitude = position.longitude.toString();
   }
 
-Future<bool> isNearByOrganization(String? organizationLatitude, String? organizationLongitude) async {
-  if (organizationLatitude == null || organizationLongitude == null) {
-    return false;
+  Future<bool> isNearByOrganization(
+      String? organizationLatitude, String? organizationLongitude) async {
+    if (organizationLatitude == null || organizationLongitude == null) {
+      return false;
+    }
+
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      return false;
+    }
+
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return false;
+    }
+
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      double currentLatitude = position.latitude;
+      double currentLongitude = position.longitude;
+
+      double orgLatitude = double.parse(organizationLatitude);
+      double orgLongitude = double.parse(organizationLongitude);
+
+      return LocationUtils.isWithinRadius(
+          currentLatitude, currentLongitude, orgLatitude, orgLongitude, 100);
+    } catch (e) {
+      // Handle location retrieval error
+      return false;
+    }
   }
-
-  LocationPermission permission = await Geolocator.checkPermission();
-  if (permission == LocationPermission.denied) {
-    permission = await Geolocator.requestPermission();
-  }
-
-  if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
-    return false;
-  }
-
-  bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  if (!serviceEnabled) {
-    return false;
-  }
-
-  try {
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    double currentLatitude = position.latitude;
-    double currentLongitude = position.longitude;
-
-    double orgLatitude = double.parse(organizationLatitude);
-    double orgLongitude = double.parse(organizationLongitude);
-
-    return LocationUtils.isWithinRadius(currentLatitude, currentLongitude, orgLatitude, orgLongitude, 100);
-  } catch (e) {
-    // Handle location retrieval error
-    return false;
-  }
-}
-
 
   getNearlyOrganizations() {
     return StreamBuilder<ResponseList<Organization>>(
@@ -188,7 +196,8 @@ Future<bool> isNearByOrganization(String? organizationLatitude, String? organiza
               Future.microtask(() async {
                 List<Organization> nearbyOrganizations = [];
                 for (var organization in snapshot.data!.data!) {
-                  bool isNearby = await isNearByOrganization(organization.latitude, organization.longitude);
+                  bool isNearby = await isNearByOrganization(
+                      organization.latitude, organization.longitude);
                   if (isNearby) {
                     nearbyOrganizations.add(organization);
                   }
@@ -199,7 +208,8 @@ Future<bool> isNearByOrganization(String? organizationLatitude, String? organiza
                       _isLoadingNearlyOrganizations = false;
                     });
                   });
-                  bool proceed = await showNearbyOrganizationsPopup(context, nearbyOrganizations);
+                  bool proceed = await showNearbyOrganizationsPopup(
+                      context, nearbyOrganizations);
                   if (!proceed) {
                     Navigator.pop(context); // Go back to the previous screen
                   }
@@ -220,7 +230,8 @@ Future<bool> isNearByOrganization(String? organizationLatitude, String? organiza
                 setState(() {
                   _isLoadingNearlyOrganizations = false;
                 });
-                showErrorAlertDialog(context, snapshot.data!.message.toString());
+                showErrorAlertDialog(
+                    context, snapshot.data!.message.toString());
               });
               break;
           }
@@ -243,6 +254,7 @@ Future<bool> isNearByOrganization(String? organizationLatitude, String? organiza
     _emailController.clear();
     _phone1Controller.clear();
     _phone2Controller.clear();
+    _whatsappController.clear();
     _address1Controller.clear();
     _address2Controller.clear();
     _address3Controller.clear();
@@ -280,6 +292,7 @@ Future<bool> isNearByOrganization(String? organizationLatitude, String? organiza
     _emailController.dispose();
     _phone1Controller.dispose();
     _phone2Controller.dispose();
+    _whatsappController.dispose();
     _address1Controller.dispose();
     _address2Controller.dispose();
     _address3Controller.dispose();
@@ -317,6 +330,11 @@ Future<bool> isNearByOrganization(String? organizationLatitude, String? organiza
           _validationMessages['phone2'] = null;
           _validationStatus['phone2'] = true;
           break;
+        case 'whatsapp':
+          _validationMessages['whatsapp'] =
+              _validateWhatsApp(_whatsappController.text);
+          _validationStatus['whatsapp'] = true;
+          break;
         case 'address1':
           _validationMessages['address1'] = null;
           _validationStatus['address1'] = true;
@@ -330,8 +348,10 @@ Future<bool> isNearByOrganization(String? organizationLatitude, String? organiza
           _validationStatus['address3'] = true;
           break;
         case 'address4':
-          _validationMessages['address4'] = _validateCity(_address4Controller.text);
-          _validationStatus['address4'] = _validationMessages['address4'] == null;
+          _validationMessages['address4'] =
+              _validateCity(_address4Controller.text);
+          _validationStatus['address4'] =
+              _validationMessages['address4'] == null;
           break;
       }
     });
@@ -369,6 +389,17 @@ Future<bool> isNearByOrganization(String? organizationLatitude, String? organiza
   //Create Search word
   String getSearchWord(String name) {
     return name.toUpperCase().replaceAll(' ', '_');
+  }
+
+  //Validate WhatsApp Number +94 Code
+  String? _validateWhatsApp(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter the WhatsApp number';
+    }
+    if (!value.startsWith('+94')) {
+      return 'WhatsApp number must start with +94';
+    }
+    return null;
   }
 
   @override
@@ -460,6 +491,15 @@ Future<bool> isNearByOrganization(String? organizationLatitude, String? organiza
                           ),
                           const SizedBox(height: 16),
                           _buildValidatedTextFormField(
+                            controller: _whatsappController,
+                            label: 'Whatsapp',
+                            fieldName: 'whatsapp',
+                            keyboardType: TextInputType.phone,
+                            focusNode: _whatsappFocusNode,
+                            validator: (value) => null,
+                          ),
+                          const SizedBox(height: 16),
+                          _buildValidatedTextFormField(
                             controller: _address1Controller,
                             label: 'Address Line 1',
                             fieldName: 'address1',
@@ -498,16 +538,27 @@ Future<bool> isNearByOrganization(String? organizationLatitude, String? organiza
                                 setState(() {
                                   _isUpdateLoading = true;
                                 });
-                                _nameController.text = capitalizeWords(_nameController.text);
-                                _phone1Controller.text = capitalizeWords(_phone1Controller.text);
-                                _phone2Controller.text = capitalizeWords(_phone2Controller.text);
-                                _address1Controller.text = capitalizeWords(_address1Controller.text);
-                                _address2Controller.text = capitalizeWords(_address2Controller.text);
-                                _address3Controller.text = capitalizeWords(_address3Controller.text);
-                                _address4Controller.text = capitalizeWords(_address4Controller.text);
+                                _nameController.text =
+                                    capitalizeWords(_nameController.text);
+                                _phone1Controller.text =
+                                    capitalizeWords(_phone1Controller.text);
+                                _phone2Controller.text =
+                                    capitalizeWords(_phone2Controller.text);
+                                _whatsappController.text =
+                                    capitalizeWords(_whatsappController.text);
+                                _address1Controller.text =
+                                    capitalizeWords(_address1Controller.text);
+                                _address2Controller.text =
+                                    capitalizeWords(_address2Controller.text);
+                                _address3Controller.text =
+                                    capitalizeWords(_address3Controller.text);
+                                _address4Controller.text =
+                                    capitalizeWords(_address4Controller.text);
 
-                                final customerTypeValidation = _validateCustomerType();
-                                if (_formKey.currentState!.validate() && customerTypeValidation == null) {
+                                final customerTypeValidation =
+                                    _validateCustomerType();
+                                if (_formKey.currentState!.validate() &&
+                                    customerTypeValidation == null) {
                                   setState(() {
                                     _isUpdateLoading = true;
                                   });
@@ -518,15 +569,26 @@ Future<bool> isNearByOrganization(String? organizationLatitude, String? organiza
                                       _isErrorMessageShown = false;
                                     });
 
-                                    final customerTypeId = _selectedCustomerType.toString();
-                                    final name = _nameController.text.toString();
-                                    final email = _emailController.text.toString();
-                                    final phone1 = _phone1Controller.text.toString();
-                                    final phone2 = _phone2Controller.text.toString();
-                                    final address1 = _address1Controller.text.toString();
-                                    final address2 = _address2Controller.text.toString();
-                                    final address3 = _address3Controller.text.toString();
-                                    final address4 = _address4Controller.text.toString();
+                                    final customerTypeId =
+                                        _selectedCustomerType.toString();
+                                    final name =
+                                        _nameController.text.toString();
+                                    final email =
+                                        _emailController.text.toString();
+                                    final phone1 =
+                                        _phone1Controller.text.toString();
+                                    final phone2 =
+                                        _phone2Controller.text.toString();
+                                    final whatsapp =
+                                        _phone2Controller.text.toString();
+                                    final address1 =
+                                        _whatsappController.text.toString();
+                                    final address2 =
+                                        _address2Controller.text.toString();
+                                    final address3 =
+                                        _address3Controller.text.toString();
+                                    final address4 =
+                                        _address4Controller.text.toString();
 
                                     if (!_isSubmitPressed) {
                                       _isSubmitPressed = true;
@@ -536,6 +598,7 @@ Future<bool> isNearByOrganization(String? organizationLatitude, String? organiza
                                           email,
                                           phone1,
                                           phone2,
+                                          whatsapp,
                                           address1,
                                           address2,
                                           address3,
@@ -558,7 +621,10 @@ Future<bool> isNearByOrganization(String? organizationLatitude, String? organiza
                 ),
               ),
             ),
-            if (_isUpdateLoading || _isCustomerTypeLoading || _isLoadingNearlyOrganizations) const Loading(),
+            if (_isUpdateLoading ||
+                _isCustomerTypeLoading ||
+                _isLoadingNearlyOrganizations)
+              const Loading(),
           ],
         ),
       ),
@@ -588,7 +654,8 @@ Future<bool> isNearByOrganization(String? organizationLatitude, String? organiza
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Organization Type', style: TextStyle(color: CustomColors.cardTextColor1)),
+                  const Text('Organization Type',
+                      style: TextStyle(color: CustomColors.cardTextColor1)),
                   const SizedBox(height: 8),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
@@ -604,7 +671,8 @@ Future<bool> isNearByOrganization(String? organizationLatitude, String? organiza
                       onPressed: (index) {
                         setState(() {
                           _selectedCustomerTypeIndex = index;
-                          _selectedCustomerType = _allCustomerTypes![index].vaufzelemId;
+                          _selectedCustomerType =
+                              _allCustomerTypes![index].vaufzelemId;
                         });
                       },
                       children: _allCustomerTypes!.map((CustomerType type) {
@@ -622,7 +690,8 @@ Future<bool> isNearByOrganization(String? organizationLatitude, String? organiza
                 setState(() {
                   _isCustomerTypeLoading = false;
                 });
-                showErrorAlertDialog(context, snapshot.data!.message.toString());
+                showErrorAlertDialog(
+                    context, snapshot.data!.message.toString());
               });
               return Container();
           }
@@ -683,7 +752,8 @@ Future<bool> isNearByOrganization(String? organizationLatitude, String? organiza
               organizationSearchWord = snapshot.data!.data!.such.toString();
 
               if (!_isAddGoodsManagementAPICall) {
-                _addGoodsManagementBloc.addGoodsManagement(organizationSearchWord, organizationNummer);
+                _addGoodsManagementBloc.addGoodsManagement(
+                    organizationSearchWord, organizationNummer);
                 _isAddGoodsManagementAPICall = true;
               }
               _isSubmitPressed = false;
@@ -696,7 +766,8 @@ Future<bool> isNearByOrganization(String? organizationLatitude, String? organiza
               });
               if (!_isErrorMessageShown) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  showErrorAlertDialog(context, snapshot.data!.message.toString());
+                  showErrorAlertDialog(
+                      context, snapshot.data!.message.toString());
                   setState(() {
                     _isErrorMessageShown = true;
                   });
@@ -732,7 +803,8 @@ Future<bool> isNearByOrganization(String? organizationLatitude, String? organiza
               if (!_isSuccessMessageShown) {
                 final name = _nameController.text.toString();
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  showSuccessAlertDialog(context, "$name has been added successfully.");
+                  showSuccessAlertDialog(
+                      context, "$name has been added successfully.");
                   setState(() {
                     _isSuccessMessageShown = true;
                   });
@@ -752,7 +824,8 @@ Future<bool> isNearByOrganization(String? organizationLatitude, String? organiza
               });
               if (!_isErrorMessageShown) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  showErrorAlertDialog(context, snapshot.data!.message.toString());
+                  showErrorAlertDialog(
+                      context, snapshot.data!.message.toString());
                   setState(() {
                     _isErrorMessageShown = true;
                   });
@@ -765,7 +838,8 @@ Future<bool> isNearByOrganization(String? organizationLatitude, String? organiza
     );
   }
 
-  Future<bool> showNearbyOrganizationsPopup(BuildContext context, List<Organization> nearbyOrganizations) async {
+  Future<bool> showNearbyOrganizationsPopup(
+      BuildContext context, List<Organization> nearbyOrganizations) async {
     String organizationCount = nearbyOrganizations.length.toString();
     return await showDialog<bool>(
           context: context,
@@ -773,7 +847,8 @@ Future<bool> isNearByOrganization(String? organizationLatitude, String? organiza
             return AlertDialog(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
-                side: const BorderSide(color: CustomColors.successAlertBorderColor),
+                side: const BorderSide(
+                    color: CustomColors.successAlertBorderColor),
               ),
               backgroundColor: CustomColors.tableBackgroundColor1,
               elevation: 24.0,
@@ -798,7 +873,9 @@ Future<bool> isNearByOrganization(String? organizationLatitude, String? organiza
                     children: [
                       Text(
                         "This location has $organizationCount nearby organizations. Do you want to continue?",
-                        style: TextStyle(fontSize: getFontSize(), color: CustomColors.cardTextColor),
+                        style: TextStyle(
+                            fontSize: getFontSize(),
+                            color: CustomColors.cardTextColor),
                       ),
                       const SizedBox(
                         height: 10,

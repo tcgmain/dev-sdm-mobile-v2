@@ -1,4 +1,6 @@
 // ignore_for_file: deprecated_member_use, use_build_context_synchronously
+//import 'dart:js_interop';
+
 import 'package:flutter/material.dart';
 import 'package:sdm/blocs/organization_info_bloc.dart';
 import 'package:sdm/models/organization.dart';
@@ -10,6 +12,7 @@ import 'package:sdm/widgets/error_alert.dart';
 import 'package:sdm/widgets/icon_button.dart';
 import 'package:sdm/widgets/loading.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class OrganizationInfoView extends StatefulWidget {
   final String username;
@@ -64,8 +67,23 @@ class _OrganizationInfoViewState extends State<OrganizationInfoView> {
       await launch(emailUri.toString());
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('No email clients installed or could not launch email app')),
+        const SnackBar(
+            content: Text(
+                'No email clients installed or could not launch email app')),
       );
+    }
+  }
+
+  Future<void> _launchWhatsApp(String phoneNumber) async {
+    final Uri whatsappUri = Uri(
+      scheme: 'https',
+      host: 'wa.me',
+      path: phoneNumber,
+    );
+    if (await canLaunch(whatsappUri.toString())) {
+      await launch(whatsappUri.toString());
+    } else {
+      throw 'Could not launch $whatsappUri';
     }
   }
 
@@ -74,7 +92,11 @@ class _OrganizationInfoViewState extends State<OrganizationInfoView> {
       scheme: 'tel',
       path: phoneNumber,
     );
-    await launchUrl(launchUri);
+    if (await canLaunch(launchUri.toString())) {
+      await launch(launchUri.toString());
+    } else {
+      throw 'Could not launch $launchUri';
+    }
   }
 
   @override
@@ -120,6 +142,7 @@ class _OrganizationInfoViewState extends State<OrganizationInfoView> {
                         //final orgnummer = organization.orgnummer.toString();
                         final yphone1 = organization.yphone1.toString();
                         final yphone2 = organization.yphone2.toString();
+                        final ywhtapp = organization.ywhtapp.toString();
                         final yaddressl1 = organization.yaddressl1.toString();
                         final yaddressl2 = organization.yaddressl2.toString();
                         final yaddressl3 = organization.yaddressl3.toString();
@@ -131,18 +154,25 @@ class _OrganizationInfoViewState extends State<OrganizationInfoView> {
                         final yemail = organization.yemail.toString();
                         final yactiv = organization.yactiv.toString();
                         final ylev = organization.ylev.toString();
-                        final ysuporgNummer = organization.ysuporgNummer.toString();
-                        final ysuporgNamebspr = organization.ysuporgNamebspr.toString();
+                        final ysuporgNummer =
+                            organization.ysuporgNummer.toString();
+                        final ysuporgNamebspr =
+                            organization.ysuporgNamebspr.toString();
                         final ycustypSuch = organization.ycustypSuch.toString();
+                        final yowname = organization.yowname.toString();
 
                         String fullAddress = "";
                         if (yaddressl1.isNotEmpty) fullAddress += yaddressl1;
-                        if (yaddressl2.isNotEmpty) fullAddress += ", $yaddressl2";
-                        if (yaddressl3.isNotEmpty) fullAddress += ", $yaddressl3";
-                        if (yaddressl4.isNotEmpty) fullAddress += ", $yaddressl4";
+                        if (yaddressl2.isNotEmpty)
+                          fullAddress += ", $yaddressl2";
+                        if (yaddressl3.isNotEmpty)
+                          fullAddress += ", $yaddressl3";
+                        if (yaddressl4.isNotEmpty)
+                          fullAddress += ", $yaddressl4";
 
                         return ListView(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 10.0),
                           children: [
                             const SizedBox(height: 10),
                             CircleAvatar(
@@ -158,7 +188,9 @@ class _OrganizationInfoViewState extends State<OrganizationInfoView> {
                               namebspr,
                               textAlign: TextAlign.center,
                               style: const TextStyle(
-                                  fontSize: 24, fontWeight: FontWeight.bold, color: CustomColors.textColor),
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: CustomColors.textColor),
                             ),
                             const SizedBox(height: 10),
                             const Divider(
@@ -175,12 +207,15 @@ class _OrganizationInfoViewState extends State<OrganizationInfoView> {
                                   children: [
                                     Row(
                                       children: [
-                                        const Icon(Icons.business_center, color: CustomColors.textColor),
+                                        const Icon(Icons.business_center,
+                                            color: CustomColors.textColor),
                                         const SizedBox(width: 10),
                                         Expanded(
                                           child: Text(
                                             "Type: $ycustypSuch",
-                                            style: TextStyle(fontSize: getFontSize(), color: CustomColors.textColor),
+                                            style: TextStyle(
+                                                fontSize: getFontSize(),
+                                                color: CustomColors.textColor),
                                           ),
                                         ),
                                       ],
@@ -190,12 +225,15 @@ class _OrganizationInfoViewState extends State<OrganizationInfoView> {
                                     ),
                                     Row(
                                       children: [
-                                        const Icon(Icons.bar_chart, color: CustomColors.textColor),
+                                        const Icon(Icons.bar_chart,
+                                            color: CustomColors.textColor),
                                         const SizedBox(width: 10),
                                         Expanded(
                                           child: Text(
                                             "Level: $ylev",
-                                            style: TextStyle(fontSize: getFontSize(), color: CustomColors.textColor),
+                                            style: TextStyle(
+                                                fontSize: getFontSize(),
+                                                color: CustomColors.textColor),
                                           ),
                                         ),
                                       ],
@@ -206,28 +244,43 @@ class _OrganizationInfoViewState extends State<OrganizationInfoView> {
                                     if (ysuporgNamebspr.isNotEmpty)
                                       Row(
                                         children: [
-                                          const Icon(Icons.supervised_user_circle, color: CustomColors.textColor),
+                                          const Icon(
+                                              Icons.supervised_user_circle,
+                                              color: CustomColors.textColor),
                                           const SizedBox(width: 10),
                                           Expanded(
                                             child: Text(
                                               "Superior: $ysuporgNamebspr",
-                                              style: TextStyle(fontSize: getFontSize(), color: CustomColors.textColor),
+                                              style: TextStyle(
+                                                  fontSize: getFontSize(),
+                                                  color:
+                                                      CustomColors.textColor),
                                             ),
                                           ),
                                           IconButton(
-                                              focusColor: CustomColors.buttonColor2,
+                                              focusColor:
+                                                  CustomColors.buttonColor2,
                                               color: CustomColors.textColor,
                                               onPressed: () {
-                                                Navigator.of(context).push(MaterialPageRoute(
-                                                    builder: (context) => OrganizationInfoView(
-                                                          username: widget.username,
-                                                          userNummer: widget.userNummer,
-                                                          organizationNummer: ysuporgNummer,
-                                                          isTeamMemberUi: widget.isTeamMemberUi,
-                                                          loggedUserNummer: widget.loggedUserNummer,
-                                                        )));
+                                                Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            OrganizationInfoView(
+                                                              username: widget
+                                                                  .username,
+                                                              userNummer: widget
+                                                                  .userNummer,
+                                                              organizationNummer:
+                                                                  ysuporgNummer,
+                                                              isTeamMemberUi: widget
+                                                                  .isTeamMemberUi,
+                                                              loggedUserNummer:
+                                                                  widget
+                                                                      .loggedUserNummer,
+                                                            )));
                                               },
-                                              icon: const Icon(Icons.open_in_new))
+                                              icon:
+                                                  const Icon(Icons.open_in_new))
                                         ],
                                       ),
                                     if (ysuporgNamebspr.isNotEmpty)
@@ -236,12 +289,33 @@ class _OrganizationInfoViewState extends State<OrganizationInfoView> {
                                       ),
                                     Row(
                                       children: [
-                                        const Icon(Icons.group, color: CustomColors.textColor),
+                                        const Icon(Icons.manage_accounts,
+                                            color: CustomColors.textColor),
+                                        const SizedBox(width: 10),
+                                        Expanded(
+                                          child: Text(
+                                            "Org Owner's Name: $yowname",
+                                            style: TextStyle(
+                                                fontSize: getFontSize(),
+                                                color: CustomColors.textColor),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const Divider(
+                                      color: CustomColors.textColorGrey,
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.group,
+                                            color: CustomColors.textColor),
                                         const SizedBox(width: 10),
                                         Expanded(
                                           child: Text(
                                             "Assigned To: $yassigto",
-                                            style: TextStyle(fontSize: getFontSize(), color: CustomColors.textColor),
+                                            style: TextStyle(
+                                                fontSize: getFontSize(),
+                                                color: CustomColors.textColor),
                                           ),
                                         ),
                                       ],
@@ -252,15 +326,21 @@ class _OrganizationInfoViewState extends State<OrganizationInfoView> {
                                     ),
                                     Row(
                                       children: [
-                                        const Icon(Icons.check_circle, color: CustomColors.textColor),
+                                        const Icon(Icons.check_circle,
+                                            color: CustomColors.textColor),
                                         const SizedBox(width: 10),
                                         Expanded(
                                           child: Text(
                                             "Status: ${yactiv == "true" ? "Active" : "Inactive"}",
-                                            style: TextStyle(fontSize: getFontSize(), color: CustomColors.textColor),
+                                            style: TextStyle(
+                                                fontSize: getFontSize(),
+                                                color: CustomColors.textColor),
                                           ),
                                         ),
-                                        Icon(Icons.circle, color: yactiv == "true" ? Colors.green : Colors.red)
+                                        Icon(Icons.circle,
+                                            color: yactiv == "true"
+                                                ? Colors.green
+                                                : Colors.red)
                                       ],
                                     ),
                                   ],
@@ -272,26 +352,34 @@ class _OrganizationInfoViewState extends State<OrganizationInfoView> {
                                 ? Card(
                                     color: CustomColors.cardBackgroundColor1,
                                     elevation: 4,
-                                    margin: const EdgeInsets.symmetric(vertical: 8),
+                                    margin:
+                                        const EdgeInsets.symmetric(vertical: 8),
                                     child: Padding(
                                       padding: const EdgeInsets.all(12),
                                       child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          const Icon(Icons.location_on, color: CustomColors.textColor),
+                                          const Icon(Icons.location_on,
+                                              color: CustomColors.textColor),
                                           const SizedBox(width: 10),
                                           Expanded(
                                             child: Text(
                                               fullAddress,
-                                              style: TextStyle(color: CustomColors.textColor, fontSize: getFontSize()),
+                                              style: TextStyle(
+                                                  color: CustomColors.textColor,
+                                                  fontSize: getFontSize()),
                                             ),
                                           ),
-                                             CustomIconButton(
-                          tooltip: 'Navigate to google map', 
-                          icon: const Icon(Icons.directions), 
-                          onPressed: () {
-                            openGoogleMaps(double.parse(latitude), double.parse(longitude));
-                          })
+                                          CustomIconButton(
+                                              tooltip: 'Navigate to google map',
+                                              icon:
+                                                  const Icon(Icons.directions),
+                                              onPressed: () {
+                                                openGoogleMaps(
+                                                    double.parse(latitude),
+                                                    double.parse(longitude));
+                                              })
                                         ],
                                       ),
                                     ),
@@ -302,52 +390,65 @@ class _OrganizationInfoViewState extends State<OrganizationInfoView> {
                                 ? Card(
                                     color: CustomColors.cardBackgroundColor1,
                                     elevation: 4,
-                                    margin: const EdgeInsets.symmetric(vertical: 8),
+                                    margin:
+                                        const EdgeInsets.symmetric(vertical: 8),
                                     child: Padding(
                                       padding: const EdgeInsets.all(12),
                                       child: Row(
                                         children: [
-                                          const Icon(Icons.phone, color: CustomColors.textColor),
+                                          const Icon(Icons.phone,
+                                              color: CustomColors.textColor),
                                           const SizedBox(width: 10),
                                           Text(
                                             yphone1,
-                                            style: TextStyle(color: CustomColors.textColor, fontSize: getFontSize()),
+                                            style: TextStyle(
+                                                color: CustomColors.textColor,
+                                                fontSize: getFontSize()),
                                           ),
                                           yphone2.isNotEmpty
                                               ? Text(
                                                   " / $yphone2",
-                                                  style:
-                                                      TextStyle(color: CustomColors.textColor, fontSize: getFontSize()),
+                                                  style: TextStyle(
+                                                      color: CustomColors
+                                                          .textColor,
+                                                      fontSize: getFontSize()),
                                                 )
                                               : Container(),
                                           const Spacer(),
                                           CustomIconButton(
-                                              tooltip: 'Call',
-                                              icon: const Icon(Icons.call),
-                                              onPressed: () {
-                                                _showCallOptions(context, yphone1, yphone2);
-                                              })
+                                            tooltip: 'Call',
+                                            icon: const Icon(Icons.call),
+                                            onPressed: () {
+                                              _showCallOptions(context, yphone1,
+                                                  yphone2, ywhtapp);
+                                            },
+                                          )
                                         ],
                                       ),
                                     ),
                                   )
                                 : Container(),
+
                             const SizedBox(height: 10),
                             yemail.isNotEmpty
                                 ? Card(
                                     color: CustomColors.cardBackgroundColor1,
                                     elevation: 4,
-                                    margin: const EdgeInsets.symmetric(vertical: 8),
+                                    margin:
+                                        const EdgeInsets.symmetric(vertical: 8),
                                     child: Padding(
                                       padding: const EdgeInsets.all(12),
                                       child: Row(
                                         children: [
-                                          const Icon(Icons.email, color: CustomColors.textColor),
+                                          const Icon(Icons.email,
+                                              color: CustomColors.textColor),
                                           const SizedBox(width: 10),
                                           Expanded(
                                             child: Text(
                                               yemail,
-                                              style: TextStyle(color: CustomColors.textColor, fontSize: getFontSize()),
+                                              style: TextStyle(
+                                                  color: CustomColors.textColor,
+                                                  fontSize: getFontSize()),
                                             ),
                                           ),
                                           CustomIconButton(
@@ -376,7 +477,8 @@ class _OrganizationInfoViewState extends State<OrganizationInfoView> {
                           setState(() {
                             _isLoading = true;
                           });
-                          showErrorAlertDialog(context, snapshot.data!.message.toString());
+                          showErrorAlertDialog(
+                              context, snapshot.data!.message.toString());
                         });
                     }
                   }
@@ -391,7 +493,8 @@ class _OrganizationInfoViewState extends State<OrganizationInfoView> {
     );
   }
 
-  void _showCallOptions(BuildContext context, phone1, phone2) {
+  void _showCallOptions(
+      BuildContext context, String phone1, String phone2, String whatsapp) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -422,12 +525,22 @@ class _OrganizationInfoViewState extends State<OrganizationInfoView> {
                     },
                   ),
                 ),
-              if (phone1.isEmpty && phone2.isEmpty)
+              if (whatsapp.isNotEmpty)
+                ListTile(
+                  leading: const FaIcon(FontAwesomeIcons.whatsapp),
+                  title: Text(whatsapp),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _launchWhatsApp(whatsapp);
+                  },
+                ),
+              if (phone1.isEmpty && phone2.isEmpty && whatsapp.isEmpty)
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
                     'No contact numbers available',
-                    style: TextStyle(fontSize: getFontSize(), fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: getFontSize(), fontWeight: FontWeight.bold),
                   ),
                 ),
             ],

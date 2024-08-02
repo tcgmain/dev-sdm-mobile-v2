@@ -8,6 +8,7 @@ class RouteOrganization {
       this.orgnummer,
       this.yphone1,
       this.yphone2,
+      this.ywhtapp,
       this.yaddressl1,
       this.yaddressl2,
       this.yaddressl3,
@@ -32,6 +33,7 @@ class RouteOrganization {
   String? orgnummer;
   String? yphone1;
   String? yphone2;
+  String? ywhtapp;
   String? yaddressl1;
   String? yaddressl2;
   String? yaddressl3;
@@ -59,6 +61,7 @@ class RouteOrganization {
       orgnummer: json["ysdmorg^nummer"] ?? '',
       yphone1: json["ysdmorg^yphone1"] ?? '',
       yphone2: json["ysdmorg^yphone2"] ?? '',
+      ywhtapp: json["ysdmorg^ywhtapp"] ?? '',
       yaddressl1: json["ysdmorg^yaddressl1"] ?? '',
       yaddressl2: json["ysdmorg^yaddressl2"] ?? '',
       yaddressl3: json["ysdmorg^yaddressl3"] ?? '',
@@ -77,6 +80,8 @@ class RouteOrganization {
     );
   }
 
+  //get ywhtapp => null;
+
   Map<String, dynamic> toJson() => {
         "nummer": nummer ?? '',
         "namebspr": namebsprRoute ?? '',
@@ -84,6 +89,7 @@ class RouteOrganization {
         "ysdmorg^nummer": orgnummer ?? '',
         "ysdmorg^yphone1": yphone1 ?? '',
         "ysdmorg^yphone2": yphone2 ?? '',
+        "ysdmorg^ywhtapp":ywhtapp ?? '',
         "ysdmorg^yaddressl1": yaddressl1 ?? '',
         "ysdmorg^yaddressl2": yaddressl2 ?? '',
         "ysdmorg^yaddressl3": yaddressl3 ?? '',

@@ -18,6 +18,7 @@ import 'package:sdm/widgets/location_util.dart';
 import 'package:sdm/widgets/map_widget.dart';
 import 'package:sdm/widgets/success_alert.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MarkVisitView extends StatefulWidget {
   final String username;
@@ -29,6 +30,7 @@ class MarkVisitView extends StatefulWidget {
   final String organizationTypeNamebspr;
   final String organizationPhone1;
   final String organizationPhone2;
+  final String organizationWhatsapp;
   final String organizationAddress1;
   final String organizationAddress2;
   final String organizationAddress3;
@@ -43,31 +45,32 @@ class MarkVisitView extends StatefulWidget {
   final String ysuporgNummer;
   final String ysuporgNamebspr;
 
-  const MarkVisitView({
-    Key? key,
-    required this.username,
-    required this.userNummer,
-    required this.routeNummer,
-    required this.organizationId,
-    required this.organizationNummer,
-    required this.organizationName,
-    required this.organizationPhone1,
-    required this.organizationPhone2,
-    required this.organizationAddress1,
-    required this.organizationAddress2,
-    required this.organizationAddress3,
-    required this.organizationAddress4,
-    required this.organizationColour,
-    required this.organizationLongitude,
-    required this.organizationLatitude,
-    required this.organizationDistance,
-    required this.organizationMail,
-    required this.isTeamMemberUi,
-    required this.loggedUserNummer,
-    required this.ysuporgNummer,
-    required this.ysuporgNamebspr,
-    required this.organizationTypeNamebspr
-  }) : super(key: key);
+  const MarkVisitView(
+      {Key? key,
+      required this.username,
+      required this.userNummer,
+      required this.routeNummer,
+      required this.organizationId,
+      required this.organizationNummer,
+      required this.organizationName,
+      required this.organizationPhone1,
+      required this.organizationPhone2,
+      required this.organizationWhatsapp,
+      required this.organizationAddress1,
+      required this.organizationAddress2,
+      required this.organizationAddress3,
+      required this.organizationAddress4,
+      required this.organizationColour,
+      required this.organizationLongitude,
+      required this.organizationLatitude,
+      required this.organizationDistance,
+      required this.organizationMail,
+      required this.isTeamMemberUi,
+      required this.loggedUserNummer,
+      required this.ysuporgNummer,
+      required this.ysuporgNamebspr,
+      required this.organizationTypeNamebspr})
+      : super(key: key);
 
   @override
   State<MarkVisitView> createState() => _MarkVisitViewState();
@@ -78,7 +81,8 @@ class _MarkVisitViewState extends State<MarkVisitView> {
   bool _isSuccessMessageShown = false;
   bool _isErrorMessageShown = false;
   late double organizationLatitude = double.parse(widget.organizationLatitude);
-  late double organizationLongitude = double.parse(widget.organizationLongitude);
+  late double organizationLongitude =
+      double.parse(widget.organizationLongitude);
   late double organizationDistance = double.parse(widget.organizationDistance);
   bool _isLoading = false;
 
@@ -100,10 +104,14 @@ class _MarkVisitViewState extends State<MarkVisitView> {
 
   getFullAddress() {
     String fullAddress = "";
-    if (widget.organizationAddress1.isNotEmpty) fullAddress += widget.organizationAddress1;
-    if (widget.organizationAddress2.isNotEmpty) fullAddress += ", ${widget.organizationAddress2}";
-    if (widget.organizationAddress3.isNotEmpty) fullAddress += ", ${widget.organizationAddress3}";
-    if (widget.organizationAddress4.isNotEmpty) fullAddress += ", ${widget.organizationAddress4}";
+    if (widget.organizationAddress1.isNotEmpty)
+      fullAddress += widget.organizationAddress1;
+    if (widget.organizationAddress2.isNotEmpty)
+      fullAddress += ", ${widget.organizationAddress2}";
+    if (widget.organizationAddress3.isNotEmpty)
+      fullAddress += ", ${widget.organizationAddress3}";
+    if (widget.organizationAddress4.isNotEmpty)
+      fullAddress += ", ${widget.organizationAddress4}";
     return fullAddress;
   }
 
@@ -140,12 +148,13 @@ class _MarkVisitViewState extends State<MarkVisitView> {
     }
 
     // Get the current position
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
     double currentLat = position.latitude;
     double currentLon = position.longitude;
 
-    bool isWithin = LocationUtils.isWithinRadius(
-        currentLat, currentLon, organizationLatitude, organizationLongitude, organizationDistance);
+    bool isWithin = LocationUtils.isWithinRadius(currentLat, currentLon,
+        organizationLatitude, organizationLongitude, organizationDistance);
 
     if (isWithin) {
       setState(() {
@@ -154,7 +163,8 @@ class _MarkVisitViewState extends State<MarkVisitView> {
       });
     } else {
       setState(() {
-        _locationMessage += "You are not within the ${widget.organizationDistance} range of this organization.";
+        _locationMessage +=
+            "You are not within the ${widget.organizationDistance} range of this organization.";
       });
     }
   }
@@ -169,8 +179,23 @@ class _MarkVisitViewState extends State<MarkVisitView> {
       await launch(emailUri.toString());
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('No email clients installed or could not launch email app')),
+        const SnackBar(
+            content: Text(
+                'No email clients installed or could not launch email app')),
       );
+    }
+  }
+  //launch whatsapp
+  Future<void> _launchWhatsApp(String phoneNumber) async {
+    final Uri whatsappUri = Uri(
+      scheme: 'https',
+      host: 'wa.me',
+      path: phoneNumber,
+    );
+    if (await canLaunch(whatsappUri.toString())) {
+      await launch(whatsappUri.toString());
+    } else {
+      throw 'Could not launch $whatsappUri';
     }
   }
 
@@ -179,14 +204,20 @@ class _MarkVisitViewState extends State<MarkVisitView> {
       scheme: 'tel',
       path: phoneNumber,
     );
-    await launchUrl(launchUri);
+    if (await canLaunch(launchUri.toString())) {
+      await launch(launchUri.toString());
+    } else {
+      throw 'Could not launch $launchUri';
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CommonAppBar(
-        title: widget.isTeamMemberUi == true ? 'Mark Visit - ${widget.username} ' : 'Mark Visit',
+        title: widget.isTeamMemberUi == true
+            ? 'Mark Visit - ${widget.username} '
+            : 'Mark Visit',
         onBackButtonPressed: () {
           Navigator.pop(context);
         },
@@ -209,7 +240,8 @@ class _MarkVisitViewState extends State<MarkVisitView> {
                             MaterialPageRoute(
                                 builder: (context) => VisitHistoryView(
                                       userNummer: widget.userNummer,
-                                      organizationNummer: widget.organizationNummer,
+                                      organizationNummer:
+                                          widget.organizationNummer,
                                       organizationName: widget.organizationName,
                                       isTeamMemberUi: widget.isTeamMemberUi,
                                     )),
@@ -230,12 +262,18 @@ class _MarkVisitViewState extends State<MarkVisitView> {
                   Text(
                     widget.organizationName,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: CustomColors.textColor),
+                    style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: CustomColors.textColor),
                   ),
-                     Text(
+                  Text(
                     widget.organizationTypeNamebspr,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: getFontSize(), fontWeight: FontWeight.normal, color: CustomColors.textColor2),
+                    style: TextStyle(
+                        fontSize: getFontSize(),
+                        fontWeight: FontWeight.normal,
+                        color: CustomColors.textColor2),
                   ),
                   const SizedBox(height: 15),
                   Row(
@@ -258,10 +296,12 @@ class _MarkVisitViewState extends State<MarkVisitView> {
                         ),
                       ),
                       CustomIconButton(
-                          tooltip: 'Navigate to google map', 
-                          icon: const Icon(Icons.directions), 
+                          tooltip: 'Navigate to google map',
+                          icon: const Icon(Icons.directions),
                           onPressed: () {
-                            openGoogleMaps(double.parse(widget.organizationLatitude), double.parse(widget.organizationLongitude));
+                            openGoogleMaps(
+                                double.parse(widget.organizationLatitude),
+                                double.parse(widget.organizationLongitude));
                           })
                     ],
                   ),
@@ -298,7 +338,11 @@ class _MarkVisitViewState extends State<MarkVisitView> {
                                 tooltip: 'Call',
                                 icon: const Icon(Icons.call),
                                 onPressed: () {
-                                  _showCallOptions(context);
+                                  _showCallOptions(
+                                      context,
+                                      widget.organizationPhone1,
+                                      widget.organizationPhone2,
+                                      widget.organizationWhatsapp);
                                 })
                           ],
                         )
@@ -347,13 +391,19 @@ class _MarkVisitViewState extends State<MarkVisitView> {
                           _isSuccessMessageShown = false;
                           _isErrorMessageShown = false;
                         });
-                        _markVisitBloc.markVisit(widget.loggedUserNummer, widget.organizationNummer, widget.routeNummer,
-                            getCurrentDate(), getCurrentTime());
+                        _markVisitBloc.markVisit(
+                            widget.loggedUserNummer,
+                            widget.organizationNummer,
+                            widget.routeNummer,
+                            getCurrentDate(),
+                            getCurrentTime());
                       },
                     ),
                   const SizedBox(height: 5),
                   Text(_locationMessage,
-                      style: TextStyle(color: _isWithinRadius ? Colors.green : Colors.red, fontSize: getFontSize()),
+                      style: TextStyle(
+                          color: _isWithinRadius ? Colors.green : Colors.red,
+                          fontSize: getFontSize()),
                       textAlign: TextAlign.center),
                   markVisitResponse()
                 ],
@@ -366,7 +416,8 @@ class _MarkVisitViewState extends State<MarkVisitView> {
     );
   }
 
-  void _showCallOptions(BuildContext context) {
+  void _showCallOptions(
+      BuildContext context, String phone1, String phone2, String whatsapp) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -375,34 +426,44 @@ class _MarkVisitViewState extends State<MarkVisitView> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              if (widget.organizationPhone1.isNotEmpty)
+              if (phone1.isNotEmpty)
                 Ink(
                   child: ListTile(
                     leading: const Icon(Icons.call),
-                    title: Text(widget.organizationPhone1),
+                    title: Text(phone1),
                     onTap: () {
-                      _launchDialer(widget.organizationPhone1);
+                      _launchDialer(phone1);
                       Navigator.pop(context);
                     },
                   ),
                 ),
-              if (widget.organizationPhone2.isNotEmpty)
+              if (phone2.isNotEmpty)
                 Ink(
                   child: ListTile(
                     leading: const Icon(Icons.call),
-                    title: Text(widget.organizationPhone2),
+                    title: Text(phone2),
                     onTap: () {
-                      _launchDialer(widget.organizationPhone2);
+                      _launchDialer(phone2);
                       Navigator.pop(context);
                     },
                   ),
                 ),
-              if (widget.organizationPhone1.isEmpty && widget.organizationPhone2.isEmpty)
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
+              if (whatsapp.isNotEmpty)
+                ListTile(
+                  leading: const FaIcon(FontAwesomeIcons.whatsapp),
+                  title: Text(whatsapp),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _launchWhatsApp(whatsapp);
+                  },
+                ),
+              if (phone1.isEmpty && phone2.isEmpty && whatsapp.isEmpty)
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
                   child: Text(
                     'No contact numbers available',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: getFontSize(), fontWeight: FontWeight.bold),
                   ),
                 ),
             ],
@@ -413,70 +474,71 @@ class _MarkVisitViewState extends State<MarkVisitView> {
   }
 
 //Mark Visit response
-Widget markVisitResponse() {
-  return StreamBuilder<Response<MarkVisit>>(
-    stream: _markVisitBloc.markVisitStream,
-    builder: (context, snapshot) {
-      if (snapshot.hasData) {
-        switch (snapshot.data!.status!) {
-          case Status.LOADING:
-            SchedulerBinding.instance.addPostFrameCallback((_) {
-              setState(() {
-                _isLoading = true;
-              });
-            });
-            break;
-          case Status.COMPLETED:
-            SchedulerBinding.instance.addPostFrameCallback((_) {
-              setState(() {
-                _isLoading = false;
-              });
-            });
-            if (!_isSuccessMessageShown) {
-              String visitNummer = snapshot.data!.data!.nummer.toString();
+  Widget markVisitResponse() {
+    return StreamBuilder<Response<MarkVisit>>(
+      stream: _markVisitBloc.markVisitStream,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          switch (snapshot.data!.status!) {
+            case Status.LOADING:
               SchedulerBinding.instance.addPostFrameCallback((_) {
-                showSuccessAlertDialog(context, "Visit Successfully Marked").then((_) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context) => HomeStockView(
-                              userNummer: widget.userNummer,
-                              username: widget.username,
-                              organizationId: widget.organizationId,
-                              organizationNummer: widget.organizationNummer,
-                              routeNummer: widget.routeNummer,
-                              visitNummer: visitNummer,
-                              loggedUserNummer: widget.loggedUserNummer,
-                              isTeamMemberUi: widget.isTeamMemberUi,
-                              organizationName: widget.organizationName,
-                              ysuporgNummer: widget.ysuporgNummer,
-                              ysuporgNamebspr: widget.ysuporgNamebspr,
-                            )),
-                  );
+                setState(() {
+                  _isLoading = true;
                 });
               });
-              _isSuccessMessageShown = true;
-            }
-            break;
-          case Status.ERROR:
-            SchedulerBinding.instance.addPostFrameCallback((_) {
-              setState(() {
-                _isLoading = false;
-              });
-            });
-            if (!_isErrorMessageShown) {
+              break;
+            case Status.COMPLETED:
               SchedulerBinding.instance.addPostFrameCallback((_) {
-                showErrorAlertDialog(context, snapshot.data!.message.toString());
+                setState(() {
+                  _isLoading = false;
+                });
               });
-              _isErrorMessageShown = true;
-            }
-            break;
+              if (!_isSuccessMessageShown) {
+                String visitNummer = snapshot.data!.data!.nummer.toString();
+                SchedulerBinding.instance.addPostFrameCallback((_) {
+                  showSuccessAlertDialog(context, "Visit Successfully Marked")
+                      .then((_) {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) => HomeStockView(
+                                userNummer: widget.userNummer,
+                                username: widget.username,
+                                organizationId: widget.organizationId,
+                                organizationNummer: widget.organizationNummer,
+                                routeNummer: widget.routeNummer,
+                                visitNummer: visitNummer,
+                                loggedUserNummer: widget.loggedUserNummer,
+                                isTeamMemberUi: widget.isTeamMemberUi,
+                                organizationName: widget.organizationName,
+                                ysuporgNummer: widget.ysuporgNummer,
+                                ysuporgNamebspr: widget.ysuporgNamebspr,
+                              )),
+                    );
+                  });
+                });
+                _isSuccessMessageShown = true;
+              }
+              break;
+            case Status.ERROR:
+              SchedulerBinding.instance.addPostFrameCallback((_) {
+                setState(() {
+                  _isLoading = false;
+                });
+              });
+              if (!_isErrorMessageShown) {
+                SchedulerBinding.instance.addPostFrameCallback((_) {
+                  showErrorAlertDialog(
+                      context, snapshot.data!.message.toString());
+                });
+                _isErrorMessageShown = true;
+              }
+              break;
+          }
         }
-      }
-      return Container();
-    },
-  );
-}
-
+        return Container();
+      },
+    );
+  }
 
 //   Widget customIconButton(BuildContext context, String tooltip){
 // return CircleAvatar(

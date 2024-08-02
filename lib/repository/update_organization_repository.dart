@@ -8,7 +8,7 @@ class UpdateOrganizationRepository {
   String? accessToken;
   dynamic inputBody, requestHeaders;
 
-  Future<UpdateOrganization> updateOrganization(String id, String email, String phone1, String phone2, String address1, String address2, String address3, String address4, String customerTypeId) async {
+  Future<UpdateOrganization> updateOrganization(String id, String email, String phone1, String phone2, String whatsapp, String address1, String address2, String address3, String address4, String customerTypeId) async {
     requestHeaders = <String, String>{'Content-Type': 'application/json', 'Accept': 'application/json'};
 
     inputBody = <String, String>{
@@ -16,6 +16,7 @@ class UpdateOrganizationRepository {
       "yemail": email,
       "yphone1": phone1,
       "yphone2": phone2,
+      "ywhtapp": whatsapp,
       "yaddressl1": address1,
       "yaddressl2": address2,
       "yaddressl3": address3,

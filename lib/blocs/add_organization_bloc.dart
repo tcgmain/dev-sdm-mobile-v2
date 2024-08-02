@@ -15,17 +15,46 @@ class AddOrganizationBloc {
       _addOrganizationController!.stream as Stream<Response<AddOrganization>>;
 
   AddOrganizationBloc() {
-    _addOrganizationController = StreamController<Response<AddOrganization>>.broadcast();
+    _addOrganizationController =
+        StreamController<Response<AddOrganization>>.broadcast();
     _addOrganizationRepository = AddOrganizationRepository();
   }
 
-  addOrganization(searchWord, name, email, phone1, phone2, address1, address2, address3, address4, latitude, longitude,
-      customerTypeId, assignToNummer, userOrganizationNummer) async {
+  addOrganization(
+      searchWord,
+      name,
+      email,
+      phone1,
+      phone2,
+      whatsapp,
+      address1,
+      address2,
+      address3,
+      address4,
+      latitude,
+      longitude,
+      customerTypeId,
+      assignToNummer,
+      userOrganizationNummer) async {
     if (_addOrganizationController?.isClosed ?? true) return;
     addOrganizationSink.add(Response.loading(''));
     try {
-      AddOrganization res = await _addOrganizationRepository.addOrganization(searchWord, name, email, phone1, phone2,
-          address1, address2, address3, address4, latitude, longitude, customerTypeId, assignToNummer, userOrganizationNummer);
+      AddOrganization res = await _addOrganizationRepository.addOrganization(
+          searchWord,
+          name,
+          email,
+          phone1,
+          phone2,
+          whatsapp,
+          address1,
+          address2,
+          address3,
+          address4,
+          latitude,
+          longitude,
+          customerTypeId,
+          assignToNummer,
+          userOrganizationNummer);
       if (_addOrganizationController?.isClosed ?? true) return;
       addOrganizationSink.add(Response.completed(res));
       print("ADD ORGANIZATION SUCCESS");

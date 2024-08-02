@@ -3,6 +3,7 @@ class UpdateOrganization {
     required this.id,
     required this.yphone1,
     required this.yphone2,
+    required this.ywhtapp,
     required this.ycustyp,
     required this.nummer,
     required this.yaddressl3,
@@ -16,6 +17,7 @@ class UpdateOrganization {
   String id;
   String yphone1;
   String yphone2;
+  String ywhtapp;
   String ycustyp;
   String nummer;
   String yaddressl3;
@@ -25,10 +27,12 @@ class UpdateOrganization {
   List<dynamic> table;
   String yemail;
 
-  factory UpdateOrganization.fromJson(Map<String, dynamic> json) => UpdateOrganization(
+  factory UpdateOrganization.fromJson(Map<String, dynamic> json) =>
+      UpdateOrganization(
         id: json["id"] ?? "",
         yphone1: json["yphone1"] ?? "",
         yphone2: json["yphone2"] ?? "",
+        ywhtapp:json["ywhtapp"] ?? "",
         ycustyp: json["ycustyp"] ?? "",
         nummer: json["nummer"] ?? "",
         yaddressl3: json["yaddressl3"] ?? "",
@@ -43,6 +47,7 @@ class UpdateOrganization {
         "id": id,
         "yphone1": yphone1,
         "yphone2": yphone2,
+        "ywhtapp": ywhtapp,
         "ycustyp": ycustyp,
         "nummer": nummer,
         "yaddressl3": yaddressl3,

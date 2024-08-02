@@ -9,6 +9,7 @@ import 'package:sdm/widgets/background_decoration.dart';
 import 'package:sdm/widgets/error_alert.dart';
 import 'package:sdm/widgets/list_button.dart';
 import 'package:sdm/widgets/loading.dart';
+// ignore: library_prefixes
 import 'package:sdm/widgets/text_field.dart' as textField;
 
 class TeamView extends StatefulWidget {
@@ -142,7 +143,7 @@ class _TeamViewState extends State<TeamView> {
                                           final memberOperatorId = team.ypasdefBezeich?.toString() ?? 'Unnamed Route';
                                           final memberNummer = team.nummer?.toString() ?? 'Unnamed Route';
                                           final memberOrganizationNummer = team.nummer?.toString() ?? 'Unnamed Route';
-                                          final memberDesignationNummer = team.designationNummer?.toString() ?? 'Unnamed Route';
+                                          //final memberDesignationNummer = team.designationNummer?.toString() ?? 'Unnamed Route';
 
                                           return Padding(
                                             padding: const EdgeInsets.only(bottom: 3, top: 3),

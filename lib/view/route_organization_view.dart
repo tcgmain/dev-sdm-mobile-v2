@@ -62,6 +62,7 @@ class _RouteOrganizationViewState extends State<RouteOrganizationView> {
       organizationMail,
       organizationPhone1,
       organizationPhone2,
+      organizationWhatsapp,
       organizationAddress1,
       organizationAddress2,
       organizationAddress3,
@@ -81,6 +82,7 @@ class _RouteOrganizationViewState extends State<RouteOrganizationView> {
               organizationMail: organizationMail,
               organizationPhone1: organizationPhone1,
               organizationPhone2: organizationPhone2,
+              organizationWhatsapp: organizationWhatsapp,
               organizationAddress1: organizationAddress1,
               organizationAddress2: organizationAddress2,
               organizationAddress3: organizationAddress3,
@@ -151,6 +153,7 @@ class _RouteOrganizationViewState extends State<RouteOrganizationView> {
                                     final organizationTypeId = organizations.ycustypId?.toString() ?? 'Unnamed Route';
                                     final organizationPhone1 = organizations.yphone1?.toString() ?? 'Unnamed Route';
                                     final organizationPhone2 = organizations.yphone2?.toString() ?? 'Unnamed Route';
+                                    final organizationWhatsapp = organizations.ywhtapp?.toString() ?? 'Unnamed Route';
                                     final organizationAddress1 =
                                         organizations.yaddressl1?.toString() ?? 'Unnamed Route';
                                     final organizationAddress2 =
@@ -191,6 +194,7 @@ class _RouteOrganizationViewState extends State<RouteOrganizationView> {
                                                           organizationMail,
                                                           organizationPhone1,
                                                           organizationPhone2,
+                                                          organizationWhatsapp,
                                                           organizationAddress1,
                                                           organizationAddress2,
                                                           organizationAddress3,
@@ -216,6 +220,7 @@ class _RouteOrganizationViewState extends State<RouteOrganizationView> {
                                                         organizationName: organizationName,
                                                         organizationPhone1: organizationPhone1,
                                                         organizationPhone2: organizationPhone2,
+                                                        organizationWhatsapp:  organizationWhatsapp,
                                                         organizationAddress1: organizationAddress1,
                                                         organizationAddress2: organizationAddress2,
                                                         organizationAddress3: organizationAddress3,
