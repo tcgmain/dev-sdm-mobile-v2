@@ -411,6 +411,108 @@ class _OrganizationInfoViewState extends State<OrganizationInfoView> {
                             const SizedBox(height: 10),
                             //Divider(),
                             const SizedBox(height: 10),
+                            yscemet == "true" || ystilea == "true" || yswaterp == "true" || ysanmet == "true" || yspaint == "true"?
+                             Card(
+                                  color: CustomColors.cardBackgroundColor1,
+                                  elevation: 4,
+                                  margin: const EdgeInsets.symmetric(vertical: 8),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Products',
+                                          style: TextStyle(
+                                            color: CustomColors.textColor, 
+                                            fontSize: getFontSize(), 
+                                            fontWeight: FontWeight.bold, 
+                                          ),
+                                        ),
+                                        if(yscemet == "true")
+                                          Row(
+                                            children: [
+                                              const SizedBox(width: 10),
+                                              const Icon(Icons.list_sharp, color: CustomColors.textColor),
+                                              Expanded(
+                                                child: Text(
+                                                  "Cement",
+                                                  style: TextStyle(
+                                                    color: CustomColors.textColor,
+                                                    fontSize: getFontSize(),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        if(ystilea == "true")
+                                        Row(
+                                          children: [
+                                            const SizedBox(width: 10),
+                                            const Icon(Icons.list_sharp, color: CustomColors.textColor),
+                                            Expanded(
+                                              child: Text(
+                                                "Tile Adhesive",
+                                                style: TextStyle(
+                                                  color: CustomColors.textColor,
+                                                  fontSize: getFontSize(),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      if (yswaterp == "true")
+                                        Row(
+                                          children: [
+                                            const SizedBox(width: 10),
+                                            const Icon(Icons.list_sharp, color: CustomColors.textColor),
+                                            Expanded(
+                                              child: Text(
+                                                "Water Proofer",
+                                                style: TextStyle(
+                                                  color: CustomColors.textColor,
+                                                  fontSize: getFontSize(),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      if (ysanmet== "true") 
+                                        Row(
+                                          children: [
+                                            const SizedBox(width: 10),
+                                            const Icon(Icons.list_sharp, color: CustomColors.textColor),
+                                            Expanded(
+                                              child: Text(
+                                                "Sand / Metal",
+                                                style: TextStyle(
+                                                  color: CustomColors.textColor,
+                                                  fontSize: getFontSize(),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      if (yspaint == "true") 
+                                        Row(
+                                          children: [
+                                            const SizedBox(width: 10),
+                                            const Icon(Icons.list_sharp, color: CustomColors.textColor),
+                                            Expanded(
+                                              child: Text(
+                                                "Paint",
+                                                style: TextStyle(
+                                                  color: CustomColors.textColor,
+                                                  fontSize: getFontSize(),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ): Container(),
                             // MapWidget(
                             //   latitude: double.parse(latitude),
                             //   longitude: double.parse(longitude),
