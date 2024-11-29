@@ -87,7 +87,7 @@ class _BirthdayPopupState extends State<BirthdayPopup> {
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        "We though you wouldn't want to miss a chnace to wish him happy birthday!",
+                        "We thought you wouldn't want to miss a chnace to wish him happy birthday!",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: textColorWhite, 
