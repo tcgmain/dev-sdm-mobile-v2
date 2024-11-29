@@ -419,6 +419,7 @@ class _OrganizationViewState extends State<OrganizationView> {
                                                                       userOrganizationNummer:
                                                                           widget.userOrganizationNummer,
                                                                       ownerBirthday: ownerBirthday,
+                                                                      ownerName: ownerName,
                                                                     )));
                                                           
                                                         },

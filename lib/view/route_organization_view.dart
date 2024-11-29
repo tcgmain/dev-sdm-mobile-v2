@@ -372,6 +372,7 @@ class _RouteOrganizationViewState extends State<RouteOrganizationView> {
                                                             organizationTypeNamebspr: organizationTypeNamebspr,
                                                             userOrganizationNummer: widget.userOrganizationNummer,
                                                             ownerBirthday: ownerBirthday,
+                                                            ownerName: ownerName,
                                                           )));
                                                 },
                                                 child: Container(

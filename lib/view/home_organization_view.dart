@@ -36,6 +36,7 @@ class HomeOrganizationView extends StatefulWidget {
   final String organizationTypeNamebspr;
   final String userOrganizationNummer;
   final String ownerBirthday;
+  final String ownerName;
 
   const HomeOrganizationView({
     super.key,
@@ -65,6 +66,7 @@ class HomeOrganizationView extends StatefulWidget {
     required this.organizationTypeNamebspr,
     required this.userOrganizationNummer,
     required this.ownerBirthday,
+    required this.ownerName,
   });
 
   @override
@@ -114,6 +116,7 @@ class _HomeOrganizationViewState extends State<HomeOrganizationView> {
             ysuporgNamebspr: widget.ysuporgNamebspr, 
             organizationTypeNamebspr: widget.organizationTypeNamebspr,
             ownerBirthday: widget.ownerBirthday,
+            ownerName: widget.ownerName,
           ),
     StockView(
       userNummer: widget.userNummer,

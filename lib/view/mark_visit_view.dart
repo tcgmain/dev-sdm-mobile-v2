@@ -48,6 +48,7 @@ class MarkVisitView extends StatefulWidget {
   final String ysuporgNummer;
   final String ysuporgNamebspr;
   final String ownerBirthday;
+  final String ownerName;
 
 
   const MarkVisitView(
@@ -75,7 +76,8 @@ class MarkVisitView extends StatefulWidget {
       required this.ysuporgNummer,
       required this.ysuporgNamebspr,
       required this.organizationTypeNamebspr,
-      required this.ownerBirthday});
+      required this.ownerBirthday,
+      required this.ownerName});
 
   @override
   State<MarkVisitView> createState() => _MarkVisitViewState();
@@ -118,7 +120,9 @@ class _MarkVisitViewState extends State<MarkVisitView> {
       SchedulerBinding.instance.addPostFrameCallback((_) {
         showDialog(
           context: context,
-          builder: (context) => BirthdayPopup(),
+          builder: (context) => BirthdayPopup(
+            ownerName: widget.ownerName,
+          ),
         );
       });
     }

@@ -341,6 +341,7 @@ class _SubOrganizationViewState extends State<SubOrganizationView> {
                                                         organizationTypeNamebspr: subOrganizationCustomerTypeNamebspr,
                                                         userOrganizationNummer: widget.userOrganizationNummer,
                                                         ownerBirthday: ownerBirthday,
+                                                        ownerName: ownerName,
                                                       )));
                                             },
                                           ),

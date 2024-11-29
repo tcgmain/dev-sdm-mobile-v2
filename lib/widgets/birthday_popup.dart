@@ -3,7 +3,15 @@ import 'package:confetti/confetti.dart';
 import 'package:sdm/utils/constants.dart';
 
 class BirthdayPopup extends StatefulWidget {
-  const BirthdayPopup({super.key});
+
+final String ownerName;
+  
+  const BirthdayPopup({
+    super.key,
+    required this.ownerName
+  });
+
+  
 
   @override
   State<BirthdayPopup> createState() => _BirthdayPopupState();
@@ -70,15 +78,17 @@ class _BirthdayPopupState extends State<BirthdayPopup> {
                     mainAxisSize: MainAxisSize.min, 
                     children: [
                       Text(
-                        'Wish your Happy Birthday',
+                        "Today is ${widget.ownerName}'s Birthday! ",
                         style: TextStyle(
                           color: textColorWhite, 
-                          fontSize: getFontSizeExtraLarge(),
+                          fontSize: getFontSizeLarge(),
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        'Wishing Your a successful Year !',
+                        "We though you wouldn't want to miss a chnace to wish him happy birthday!",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           color: textColorWhite, 
                           fontSize: getFontSize(),
