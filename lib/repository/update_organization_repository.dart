@@ -24,7 +24,12 @@ class UpdateOrganizationRepository {
       String isWaterproofing,
       String isFlooring,
       String organizationColor,
-      String superiorOrganization
+      String superiorOrganization,
+      String isCement,
+      String isTile,
+      String isWaterProof,
+      String isSansAndMetal,
+      String isPaint,
       ) async {
     requestHeaders = <String, String>{'Content-Type': 'application/json', 'Accept': 'application/json'};
 
@@ -44,7 +49,12 @@ class UpdateOrganizationRepository {
       "ywaterpr": isWaterproofing,
       "yflooring": isFlooring,
       "yselcolour": organizationColor,
-      "ysuporg": superiorOrganization
+      "ysuporg": superiorOrganization,
+      "yscemet": isCement,
+      "ystilea": isTile,
+      "yswaterp": isWaterProof,
+      "ysanmet": isSansAndMetal,
+      "yspaint": isPaint
     };
 
     final response = await _provider.post("/updateorganization", jsonEncode(inputBody), requestHeaders);

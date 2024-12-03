@@ -31,9 +31,14 @@ class AddOrganizationRepository {
       String isWaterproofing,
       String isFlooring,
       String organizationColor,
-      String superiorOrganization) async {
+      String superiorOrganization,
+      String isCement,
+      String isPaint,
+      String isTile,
+      String isWaterProof,
+      String isSansAndMetal) async {
     requestHeaders = <String, String>{'Content-Type': 'application/json', 'Accept': 'application/json'};
-
+print('yyyy');
     inputBody = <String, String>{
       "nummer": "",
       "such": searchWord,
@@ -57,7 +62,12 @@ class AddOrganizationRepository {
       "ymasonry": isMasonry,
       "ywaterpr": isWaterproofing,
       "yflooring": isFlooring,
-      "yselcolour": organizationColor
+      "yselcolour": organizationColor,
+      "yscemet": isCement,
+      "yspaint": isPaint,
+      "ystilea": isTile,
+      "yswaterp": isWaterProof,
+      "ysanmet": isSansAndMetal
     };
 
     final response = await _provider.post("/addorganization", jsonEncode(inputBody), requestHeaders);

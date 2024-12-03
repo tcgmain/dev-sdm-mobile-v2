@@ -106,6 +106,11 @@ class _OrganizationViewState extends State<OrganizationView> {
       ymasonry,
       ywaterpr,
       yflooring,
+      yscemet,
+      ystilea,
+      yswaterp,
+      ysanmet,
+      yspaint,
       organizationColor) async {
     final result = await Navigator.push(
       context,
@@ -133,6 +138,11 @@ class _OrganizationViewState extends State<OrganizationView> {
                 isMasonry: bool.parse(ymasonry),
                 isWaterproofing: bool.parse(ywaterpr),
                 isFlooring: bool.parse(yflooring),
+                isCement: bool.parse(yscemet),
+                isPaint: bool.parse(yspaint),
+                isSansAndMetal: bool.parse(ysanmet),
+                isTile: bool.parse(ystilea),
+                isWaterProof: bool.parse(yswaterp),
                 userOrganizationNummer: widget.userOrganizationNummer,
                 designationNummer: widget.designationNummer,
                 organizationColor: organizationColor,
@@ -339,11 +349,16 @@ class _OrganizationViewState extends State<OrganizationView> {
                                             String isWaterproofing =
                                                 organizations.ywaterpr?.toString() ?? 'Unnamed Route';
                                             String isFlooring = organizations.yflooring?.toString() ?? 'Unnamed Route';
-                                            final yscemet = organizations.yscemet;
-                                            final ystilea = organizations.ystilea?.toString() ?? 'Unnamed Route';
-                                            final yswaterp = organizations.yswaterp?.toString() ?? 'Unnamed Route';
-                                            final ysanmet = organizations.ysanmet?.toString() ?? 'Unnamed Route';
-                                            final yspaint = organizations.yspaint?.toString() ?? 'Unnamed Route';
+                                            String isCement = organizations.yscemet?.toString() ?? 'Unnamed Route';
+                                            String isTile = organizations.ystilea?.toString() ?? 'Unnamed Route';
+                                            String isWaterProof= organizations.yswaterp?.toString() ?? 'Unnamed Route';
+                                            String isPaint= organizations.yspaint?.toString() ?? 'Unnamed Route';
+                                            String isSansAndMetal= organizations.ysanmet?.toString() ?? 'Unnamed Route';
+                                            // final yscemet = organizations.yscemet;
+                                            // final ystilea = organizations.ystilea?.toString() ?? 'Unnamed Route';
+                                            // final yswaterp = organizations.yswaterp?.toString() ?? 'Unnamed Route';
+                                            // final ysanmet = organizations.ysanmet?.toString() ?? 'Unnamed Route';
+                                            // final yspaint = organizations.yspaint?.toString() ?? 'Unnamed Route';
 
                                             return Padding(
                                               padding: const EdgeInsets.only(bottom: 3, top: 3),
@@ -375,6 +390,11 @@ class _OrganizationViewState extends State<OrganizationView> {
                                                             isMasonry,
                                                             isWaterproofing,
                                                             isFlooring,
+                                                            isCement,
+                                                            isTile,
+                                                            isWaterProof,
+                                                            isPaint,
+                                                            isSansAndMetal,
                                                             organizationColour);
                                                       },
                                                       backgroundColor: CustomColors.buttonColor,

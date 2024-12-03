@@ -15,17 +15,17 @@ class RouteList {
       return RouteList();
     }
     return RouteList(
-      id: json["id"] ?? '',
-      nummer: json["nummer"] ?? '',
-      namebsprRoute: json["namebspr"] ?? '',
+      id: json["id"] ,
+      nummer: json["nummer"] ,
+      namebsprRoute: json["namebspr"] ,
     
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "id": id ?? '',
-        "nummer": nummer ?? '',
-        "namebspr": namebsprRoute ?? '',
+        "id": id ,
+        "nummer": nummer ,
+        "namebspr": namebsprRoute ,
       
       };
 }

@@ -20,7 +20,7 @@ class UpdateOrganizationBloc {
   }
 
   updateOrganization(id, email, ownerName, phone1, phone2, whatsapp, address1, address2, address3, town, customerTypeId,
-      isMasonry, isWaterproofing, isFlooring, organizationColor, superiorOrganization) async {
+      isMasonry, isWaterproofing, isFlooring, organizationColor, superiorOrganization, isCement, isTile, isWaterProof, isSansAndMetal, isPaint) async {
     if (_updateOrganizationController?.isClosed ?? true) return;
     updateOrganizationSink.add(Response.loading(''));
     try {
@@ -39,7 +39,14 @@ class UpdateOrganizationBloc {
           isMasonry,
           isWaterproofing,
           isFlooring,
-          organizationColor, superiorOrganization);
+          organizationColor, 
+          superiorOrganization,
+          isCement,
+          isTile,
+          isWaterProof,
+          isSansAndMetal,
+          isPaint
+          );
       if (_updateOrganizationController?.isClosed ?? true) return;
       updateOrganizationSink.add(Response.completed(res));
       print("UPDATE ORGANIZATION SUCCESS");

@@ -92,6 +92,11 @@ class _ApprovedOrganizationListViewState extends State<ApprovedOrganizationListV
       ymasonry,
       ywaterpr,
       yflooring,
+      yscemet,
+      ystilea,
+      yswaterp,
+      ysanmet,
+      yspaint,
       organizationColor) async {
     final result = await Navigator.push(
       context,
@@ -119,6 +124,11 @@ class _ApprovedOrganizationListViewState extends State<ApprovedOrganizationListV
                 isMasonry: bool.parse(ymasonry),
                 isWaterproofing: bool.parse(ywaterpr),
                 isFlooring: bool.parse(yflooring),
+                isCement: bool.parse(yscemet),
+                isPaint: bool.parse(yspaint),
+                isWaterProof: bool.parse(yswaterp),
+                isSansAndMetal: bool.parse(ysanmet),
+                isTile: bool.parse(ystilea),
                 userOrganizationNummer: widget.userOrganizationNummer,
                 designationNummer: widget.designationNummer,
                 organizationColor: organizationColor,
@@ -247,6 +257,11 @@ class _ApprovedOrganizationListViewState extends State<ApprovedOrganizationListV
                                       String isMasonry = organizations.ymasonry?.toString() ?? 'Unnamed Route';
                                       String isWaterproofing = organizations.ywaterpr?.toString() ?? 'Unnamed Route';
                                       String isFlooring = organizations.yflooring?.toString() ?? 'Unnamed Route';
+                                      String isCement = organizations.yscemet.toString();
+                                      String isPaint = organizations.yspaint.toString();
+                                      String isTile= organizations.ystilea.toString();
+                                      String isWaterProof = organizations.yswaterp.toString();
+                                      String isSansAndMetal = organizations.yscemet.toString();
                                       String creationDate = organizations.erfass?.toString() ?? 'Unnamed Route';
                                       String approvedBy = organizations.yorgappu?.toString() ?? 'Unnamed Route';
                                       String approvedDate = organizations.yorgappdt?.toString() ?? 'Unnamed Route';
@@ -280,6 +295,11 @@ class _ApprovedOrganizationListViewState extends State<ApprovedOrganizationListV
                                                       isMasonry,
                                                       isWaterproofing,
                                                       isFlooring,
+                                                      isCement,
+                                                      isPaint,
+                                                      isTile,
+                                                      isWaterProof,
+                                                      isSansAndMetal,
                                                       organizationColor);
                                                 },
                                                 backgroundColor: CustomColors.buttonColor,

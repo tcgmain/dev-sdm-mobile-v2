@@ -45,6 +45,11 @@ class UpdateOrganizationView extends StatefulWidget {
   final bool isMasonry;
   final bool isWaterproofing;
   final bool isFlooring;
+  final bool isCement;
+  final bool isPaint;
+  final bool isWaterProof;
+  final bool isTile;
+  final bool isSansAndMetal;
   final String userOrganizationNummer;
   final String designationNummer;
   final String organizationColor;
@@ -76,6 +81,11 @@ class UpdateOrganizationView extends StatefulWidget {
     required this.userOrganizationNummer,
     required this.designationNummer,
     required this.organizationColor,
+    required this.isCement,
+    required this.isPaint,
+    required this.isSansAndMetal,
+    required this.isTile,
+    required this.isWaterProof,
   });
 
   @override
@@ -152,6 +162,12 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
   late bool isMasonry;
   late bool isWaterproofing;
   late bool isFlooring;
+  late bool isCement;
+  late bool isPaint;
+  late bool isTile;
+  late bool isWaterProof;
+  late bool isSansAndMetal;
+
 
   final Map<String, bool?> _validationStatus = {
     'email': null,
@@ -199,6 +215,11 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
     isMasonry = widget.isMasonry;
     isWaterproofing = widget.isWaterproofing;
     isFlooring = widget.isFlooring;
+    isCement = widget.isCement;
+    isPaint =widget.isPaint;
+    isTile = widget.isTile;
+    isWaterProof = widget.isWaterProof;
+    isSansAndMetal = widget.isSansAndMetal;
 
     _customerTypeBloc = CustomerTypeBloc();
     _updateOrganizationBloc = UpdateOrganizationBloc();
@@ -396,7 +417,7 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
                               widget.organizationName,
                               style: TextStyle(fontSize: getFontSizeLarge(), color: CustomColors.cardTextColor),
                             ),
-                            getSuperiorOrganizationResponse(),
+                            getSuperiorOrganizationResponse(), 
                             getRouteListResponse(),
                             updateOrganizationResponse(),
                             updateRouteResponse(),
@@ -521,6 +542,50 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
                             if (widget.organizationNummer != "5") buildSuperiorOrganizationDropdown(),
                             if (widget.organizationNummer != "5") const SizedBox(height: 16),
                             buildRouteDropdown(),
+
+                            //break 
+                              
+                            if (organizationType != "Project")
+                              const SizedBox(height: 20),
+                            if (organizationType != "Project")
+                              const Align(
+                                  alignment: Alignment.centerLeft,
+                                  child:
+                                      Text('Product  ffffffff', style: TextStyle(color: CustomColors.cardTextColor1))),
+                            
+                            const SizedBox(height: 8),
+                            if (organizationType != "Project")
+                              _buildToggleSwitch('Cement', isCement, (value) {
+                                setState(() {
+                                  isCement = value;
+                                });
+                              }),
+                              if (organizationType != "Project")
+                              _buildToggleSwitch('Water Proofing', isWaterProof, (value) {
+                                setState(() {
+                                  isWaterProof = value;
+                                });
+                              }),
+                              if (organizationType != "Project")
+                              _buildToggleSwitch('Paint', isPaint, (value) {
+                                setState(() {
+                                  isPaint = value;
+                                });
+                              }),
+                              if (organizationType != "Project")
+                              _buildToggleSwitch('Sand / Metal', isSansAndMetal, (value) {
+                                setState(() {
+                                  isSansAndMetal = value;
+                                });
+                              }),
+                              if (organizationType != "Project")
+                              _buildToggleSwitch('Tile', isTile, (value) {
+                                setState(() {
+                                  isTile = value;
+                                });
+                              }),
+
+                              //break
                             const SizedBox(height: 16),
                             Center(
                               child: CommonAppButton(
@@ -541,9 +606,9 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
                                     _address2Controller.text = capitalizeWords(_address2Controller.text);
                                     _address3Controller.text = capitalizeWords(_address3Controller.text);
                                     _townController.text = capitalizeWords(_townController.text);
-print("NNN");
+                                    print("NNN");
                                     if (_formKey.currentState!.validate()) {
-                                      print("ttt");
+                                      print("TTT");
                                       setState(() {
                                         _isUpdateLoading = true;
                                       });
@@ -581,7 +646,12 @@ print("NNN");
                                           isWaterproofing.toString(),
                                           isFlooring.toString(),
                                           organizationColor,
-                                          superiorOrganization);
+                                          superiorOrganization,
+                                          isCement,
+                                          isTile,
+                                          isWaterProof,
+                                          isSansAndMetal,
+                                          isPaint);
 
                                       if (organizationType != "Project" || organizationType != "(4147,12,0)") {
                                         isMasonry = false;

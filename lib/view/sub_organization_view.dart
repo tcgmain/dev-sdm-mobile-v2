@@ -87,6 +87,11 @@ class _SubOrganizationViewState extends State<SubOrganizationView> {
       ymasonry,
       ywaterpr,
       yflooring,
+      yscemet,
+      ystilea,
+      yswaterp,
+      ysanmet,
+      yspaint,
       organizationColor) async {
     final result = await Navigator.push(
       context,
@@ -114,6 +119,11 @@ class _SubOrganizationViewState extends State<SubOrganizationView> {
                 isMasonry: bool.parse(ymasonry),
                 isWaterproofing: bool.parse(ywaterpr),
                 isFlooring: bool.parse(yflooring),
+                isCement: bool.parse(yscemet),
+                isPaint: bool.parse(yspaint),
+                isWaterProof: bool.parse(yswaterp),
+                isSansAndMetal: bool.parse(ysanmet),
+                isTile: bool.parse(ystilea),
                 userOrganizationNummer: widget.userOrganizationNummer,
                 designationNummer: widget.designationNummer,
                 organizationColor: organizationColor,
@@ -244,6 +254,11 @@ class _SubOrganizationViewState extends State<SubOrganizationView> {
                                       String isMasonry = subOrganizations.ymasonry?.toString() ?? '';
                                       String isWaterproofing = subOrganizations.ywaterpr?.toString() ?? '';
                                       String isFlooring = subOrganizations.yflooring?.toString() ?? '';
+                                      String isCement = subOrganizations.yscemet.toString();
+                                      String isPaint = subOrganizations.yspaint.toString();
+                                      String isTile= subOrganizations.ystilea.toString();
+                                      String isWaterProof = subOrganizations.yswaterp.toString();
+                                      String isSansAndMetal = subOrganizations.yscemet.toString();
 
 
                                       return Padding(
@@ -302,6 +317,11 @@ class _SubOrganizationViewState extends State<SubOrganizationView> {
                                                             isMasonry,
                                                             isWaterproofing,
                                                             isFlooring,
+                                                            isCement,
+                                                            isPaint,
+                                                            isTile,
+                                                            isWaterProof,
+                                                            isSansAndMetal,
                                                             subOrganizationColour);
                                                 },
                                                 backgroundColor: CustomColors.buttonColor,

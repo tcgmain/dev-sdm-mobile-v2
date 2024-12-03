@@ -102,6 +102,11 @@ class _PendingApproveOrganizationListViewState extends State<PendingApproveOrgan
       ymasonry,
       ywaterpr,
       yflooring,
+      yscemet,
+      ystilea,
+      yswaterp,
+      ysanmet,
+      yspaint,
       organizationColor) async {
     final result = await Navigator.push(
       context,
@@ -129,6 +134,11 @@ class _PendingApproveOrganizationListViewState extends State<PendingApproveOrgan
                 isMasonry: bool.parse(ymasonry),
                 isWaterproofing: bool.parse(ywaterpr),
                 isFlooring: bool.parse(yflooring),
+                isCement: bool.parse(yscemet),
+                isPaint: bool.parse(yspaint),
+                isWaterProof: bool.parse(yswaterp),
+                isSansAndMetal: bool.parse(ysanmet),
+                isTile: bool.parse(ystilea),
                 userOrganizationNummer: widget.userOrganizationNummer,
                 designationNummer: widget.designationNummer,
                 organizationColor: organizationColor,
@@ -239,6 +249,11 @@ class _PendingApproveOrganizationListViewState extends State<PendingApproveOrgan
                                       String isMasonry = organizations.ymasonry.toString();
                                       String isWaterproofing = organizations.ywaterpr.toString();
                                       String isFlooring = organizations.yflooring.toString();
+                                      String isCement = organizations.yscemet.toString();
+                                      String isPaint = organizations.yspaint.toString();
+                                      String isTile= organizations.ystilea.toString();
+                                      String isWaterProof = organizations.yswaterp.toString();
+                                      String isSansAndMetal = organizations.yscemet.toString();
                                       String organizationAssignTo =
                                           organizations.yassigto?.toString() ?? 'Unnamed Route';
                                       String organizationColor = organizations.colour?.toString() ?? 'Unnamed Route';
@@ -274,7 +289,12 @@ class _PendingApproveOrganizationListViewState extends State<PendingApproveOrgan
                                                       isMasonry,
                                                       isWaterproofing,
                                                       isFlooring,
-                                                      organizationColor);
+                                                      organizationColor,
+                                                      isCement,
+                                                      isPaint,
+                                                      isTile,
+                                                      isWaterProof,
+                                                      isSansAndMetal);
                                                 },
                                                 backgroundColor: CustomColors.buttonColor,
                                                 foregroundColor: CustomColors.buttonTextColor,

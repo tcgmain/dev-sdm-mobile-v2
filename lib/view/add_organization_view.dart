@@ -123,6 +123,12 @@ class _AddOrganizationViewState extends State<AddOrganizationView> {
   bool isMasonry = false;
   bool isWaterproofing = false;
   bool isFlooring = false;
+  bool isCement = false;
+  bool isPaint = false;
+  bool isTile = false;
+  bool isWaterProof = false;
+  bool isSansAndMetal = false;
+  
 
   final Map<String, bool?> _validationStatus = {
     'name': null,
@@ -522,31 +528,30 @@ class _AddOrganizationViewState extends State<AddOrganizationView> {
                                 ),
                               ),
                             ),
-                          if (organizationType == "Project") const SizedBox(height: 20),
-                          if (organizationType == "Project")
+                          if (_validateCustomerType() == null && organizationType == "Project") ...[
+                            const SizedBox(height: 20),
                             const Align(
-                                alignment: Alignment.centerLeft,
-                                child:
-                                    Text('Contractor Details', style: TextStyle(color: CustomColors.cardTextColor1))),
-                          if (organizationType == "Project") const SizedBox(height: 8),
-                          if (organizationType == "Project")
+                              alignment: Alignment.centerLeft,
+                              child: Text('Contractor Details', style: TextStyle(color: CustomColors.cardTextColor1)),
+                            ),
+                            const SizedBox(height: 20),
                             _buildToggleSwitch('Masonry', isMasonry, (value) {
                               setState(() {
                                 isMasonry = value;
                               });
                             }),
-                          if (organizationType == "Project")
                             _buildToggleSwitch('Waterproofing', isWaterproofing, (value) {
                               setState(() {
                                 isWaterproofing = value;
                               });
                             }),
-                          if (organizationType == "Project")
                             _buildToggleSwitch('Flooring', isFlooring, (value) {
                               setState(() {
                                 isFlooring = value;
                               });
                             }),
+                          ],
+
                           const SizedBox(height: 16),
                           _buildValidatedTextFormField(
                             controller: _nameController,
@@ -647,10 +652,46 @@ class _AddOrganizationViewState extends State<AddOrganizationView> {
                           const SizedBox(height: 16),
                           buildRouteDropdown(),
                           const SizedBox(height: 16),
+
+                          if (_validateCustomerType() == null && organizationType != "Project")...[
+                            const SizedBox(height: 8),
+                            const Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text('Product Details', style: TextStyle(color: CustomColors.cardTextColor1)),
+                            ),
+                            const SizedBox(height: 20),
+                            _buildToggleSwitch('Cement', isCement, (value) {
+                              setState(() {
+                                isCement = value;
+                              });
+                            }),
+                            _buildToggleSwitch('Water Proofing', isWaterProof, (value) {
+                              setState(() {
+                                isWaterProof = value;
+                              });
+                            }),
+                            _buildToggleSwitch('Paint', isPaint, (value) {
+                              setState(() {
+                                isPaint = value;
+                              });
+                            }),
+                            _buildToggleSwitch('Sand / Metal', isSansAndMetal, (value) {
+                              setState(() {
+                                isSansAndMetal = value;
+                              });
+                            }),
+                            _buildToggleSwitch('Tile', isTile, (value) {
+                              setState(() {
+                                isTile = value;
+                              });
+                            }),
+                          ],
+
                           Center(
                             child: CommonAppButton(
                               buttonText: 'Register',
                               onPressed: () {
+                                
                                 _nameController.text = capitalizeWords(_nameController.text);
                                 _ownerNameController.text = capitalizeWords(_ownerNameController.text);
                                 _phone1Controller.text = capitalizeWords(_phone1Controller.text);
@@ -661,15 +702,12 @@ class _AddOrganizationViewState extends State<AddOrganizationView> {
                                 _address3Controller.text = capitalizeWords(_address3Controller.text);
                                 _townController.text = capitalizeWords(_townController.text);
 
-                                print(_ownerBirthdayController.text);
-
                                 final customerTypeValidation = _validateCustomerType();
                                 if (_formKey.currentState!.validate() && customerTypeValidation == null) {
                                   _isSuccessMessageShown = false;
                                   _isAddGoodsManagementAPICall = false;
                                   _isAddOrganizationErrorMessageShown = false;
                                   _isUpdateRouteLoaded = false;
-
                                   final customerTypeId = _selectedCustomerType.toString();
                                   final name = "${_nameController.text}_${_townController.text}";
                                   final email = _emailController.text.toString();
@@ -713,7 +751,12 @@ class _AddOrganizationViewState extends State<AddOrganizationView> {
                                         isWaterproofing.toString(),
                                         isFlooring.toString(),
                                         organizationColor,
-                                        superiorOrganization);
+                                        superiorOrganization,
+                                        isCement,
+                                        isPaint,
+                                        isTile,
+                                        isWaterProof,
+                                        isSansAndMetal);
 
                                     if (organizationType != "Project" || organizationType != "(4147,12,0)") {
                                       isMasonry = false;

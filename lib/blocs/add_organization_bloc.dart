@@ -41,33 +41,45 @@ class AddOrganizationBloc {
       isWaterproofing,
       isFlooring,
       organizationColor,
-      superiorOrganization) async {
+      superiorOrganization,
+      isCement,
+      isPaint,
+      isTile,
+      isWaterProof,
+      isSansAndMetal,
+      ) async {
     if (_addOrganizationController?.isClosed ?? true) return;
     addOrganizationSink.add(Response.loading(''));
     try {
+      
       AddOrganization res = await _addOrganizationRepository.addOrganization(
-          searchWord,
-          name,
-          email,
-          phone1,
-          phone2,
-          whatsapp,
-          address1,
-          address2,
-          address3,
-          town,
-          latitude,
-          longitude,
-          customerTypeId,
-          assignToNummer,
-          userOrganizationNummer,
-          ownerName,
-          ownerBirthday,
-          isMasonry,
-          isWaterproofing,
-          isFlooring,
-          organizationColor,
-          superiorOrganization);
+          searchWord.toString(),
+          name.toString(),
+          email.toString(),
+          phone1.toString(),
+          phone2.toString(),
+          whatsapp.toString(),
+          address1.toString(),
+          address2.toString(),
+          address3.toString(),
+          town.toString(),
+          latitude.toString(),
+          longitude.toString(),
+          customerTypeId.toString(),
+          assignToNummer.toString(),
+          userOrganizationNummer.toString(),
+          ownerName.toString(),
+          ownerBirthday.toString(),
+          isMasonry.toString(),
+          isWaterproofing.toString(),
+          isFlooring.toString(),
+          organizationColor.toString(),
+          superiorOrganization.toString(),
+          isCement.toString(),
+          isPaint.toString(),
+          isTile.toString(),
+          isWaterProof.toString(),
+          isSansAndMetal.toString());
       if (_addOrganizationController?.isClosed ?? true) return;
       addOrganizationSink.add(Response.completed(res));
       print("ADD ORGANIZATION SUCCESS");

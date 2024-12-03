@@ -119,6 +119,12 @@ class _RouteOrganizationViewState extends State<RouteOrganizationView> {
       isMasonry,
       isWaterproofing,
       isFlooring,
+      yscemet,
+      ystilea,
+      yswaterp,
+      ysanmet,
+      yspaint,
+      
       organizationColor) async {
     final result = await Navigator.push(
       context,
@@ -145,6 +151,11 @@ class _RouteOrganizationViewState extends State<RouteOrganizationView> {
                 isMasonry: bool.parse(isMasonry),
                 isWaterproofing: bool.parse(isWaterproofing),
                 isFlooring: bool.parse(isFlooring),
+                isCement: bool.parse(yscemet),
+                isPaint: bool.parse(yspaint),
+                isWaterProof: bool.parse(yswaterp),
+                isSansAndMetal: bool.parse(ysanmet),
+                isTile: bool.parse(ystilea),
                 userOrganizationNummer: widget.userOrganizationNummer,
                 designationNummer: widget.designationNummer,
                 organizationColor: organizationColor,
@@ -286,11 +297,11 @@ class _RouteOrganizationViewState extends State<RouteOrganizationView> {
                                       final sequence = organizations.ysequno.toString();
                                       final nextVisitDueDate = organizations.ynxtvisitdat?.toString() ?? '';
                                       final yactiv = organizations.yactiv.toString();
-                                      final yscemet = organizations.yscemet.toString();
-                                      final ystilea = organizations.ystilea.toString();
-                                      final yswaterp = organizations.yswaterp.toString();
-                                      final ysanmet = organizations.ysanmet.toString();
-                                      final yspaint = organizations.yspaint.toString();
+                                      String isCement = organizations.yscemet.toString();
+                                      String isPaint = organizations.yspaint.toString();
+                                      String isTile= organizations.ystilea.toString();
+                                      String isWaterProof = organizations.yswaterp.toString();
+                                      String isSansAndMetal = organizations.yscemet.toString();
 
                                       // Parse the nextVisitDueDate to DateTime
                                       DateTime? nextVisitDate;
@@ -331,6 +342,11 @@ class _RouteOrganizationViewState extends State<RouteOrganizationView> {
                                                           isMasonry,
                                                           isWaterproofing,
                                                           isFlooring,
+                                                          isCement,
+                                                          isPaint,
+                                                          isTile,
+                                                          isWaterProof,
+                                                          isSansAndMetal,
                                                           organizationColour);
                                                     },
                                                     backgroundColor: CustomColors.buttonColor,

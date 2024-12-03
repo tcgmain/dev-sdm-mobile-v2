@@ -116,11 +116,11 @@ class Organization {
       erfass: json["erfass"],
       yorgappu: json["yorgappu"],
       yorgappdt: json["yorgappdt"],
-       yscemet: json["yscemet"] ?? '',
-      ystilea: json["ystilea"] ?? '',
-      yswaterp: json["yswaterp"] ?? '',
-      ysanmet: json["ysanmet"] ?? '',
-      yspaint: json["yspaint"] ?? '',
+       yscemet: json["yscemet"],
+      ystilea: json["ystilea"],
+      yswaterp: json["yswaterp"],
+      ysanmet: json["ysanmet"],
+      yspaint: json["yspaint"],
     );
   }
 
@@ -159,10 +159,10 @@ class Organization {
         "erfass": erfass,
         "yorgappu": yorgappu,
         "yorgappdt": yorgappdt,
-        "yscemet": yscemet ?? '',
-        "ystilea": ystilea ?? '',
-        "yswaterp": yswaterp ?? '',
-        "ysanmet": ysanmet ?? '',
-        "yspaint": yspaint ?? '',
+        "yscemet": yscemet,
+        "ystilea": ystilea,
+        "yswaterp": yswaterp,
+        "ysanmet": ysanmet,
+        "yspaint": yspaint,
       };
 }
