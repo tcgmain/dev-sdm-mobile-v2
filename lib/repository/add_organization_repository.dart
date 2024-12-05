@@ -33,10 +33,10 @@ class AddOrganizationRepository {
       String organizationColor,
       String superiorOrganization,
       String isCement,
-      String isPaint,
       String isTile,
       String isWaterProof,
-      String isSansAndMetal) async {
+      String isSansAndMetal,
+      String isPaint) async {
     requestHeaders = <String, String>{'Content-Type': 'application/json', 'Accept': 'application/json'};
 print('yyyy');
     inputBody = <String, String>{
@@ -64,10 +64,10 @@ print('yyyy');
       "yflooring": isFlooring,
       "yselcolour": organizationColor,
       "yscemet": isCement,
-      "yspaint": isPaint,
       "ystilea": isTile,
       "yswaterp": isWaterProof,
-      "ysanmet": isSansAndMetal
+      "ysanmet": isSansAndMetal,
+      "yspaint": isPaint
     };
 
     final response = await _provider.post("/addorganization", jsonEncode(inputBody), requestHeaders);

@@ -46,10 +46,10 @@ class UpdateOrganizationView extends StatefulWidget {
   final bool isWaterproofing;
   final bool isFlooring;
   final bool isCement;
-  final bool isPaint;
-  final bool isWaterProof;
   final bool isTile;
+  final bool isWaterProof;
   final bool isSansAndMetal;
+  final bool isPaint;
   final String userOrganizationNummer;
   final String designationNummer;
   final String organizationColor;
@@ -82,10 +82,10 @@ class UpdateOrganizationView extends StatefulWidget {
     required this.designationNummer,
     required this.organizationColor,
     required this.isCement,
-    required this.isPaint,
-    required this.isSansAndMetal,
     required this.isTile,
     required this.isWaterProof,
+    required this.isSansAndMetal,
+    required this.isPaint,
   });
 
   @override
@@ -561,15 +561,15 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
                                 });
                               }),
                               if (organizationType != "Project")
-                              _buildToggleSwitch('Water Proofing', isWaterProof, (value) {
+                              _buildToggleSwitch('Tile', isTile, (value) {
                                 setState(() {
-                                  isWaterProof = value;
+                                  isTile = value;
                                 });
                               }),
                               if (organizationType != "Project")
-                              _buildToggleSwitch('Paint', isPaint, (value) {
+                              _buildToggleSwitch('Water Proofing', isWaterProof, (value) {
                                 setState(() {
-                                  isPaint = value;
+                                  isWaterProof = value;
                                 });
                               }),
                               if (organizationType != "Project")
@@ -579,11 +579,11 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
                                 });
                               }),
                               if (organizationType != "Project")
-                              _buildToggleSwitch('Tile', isTile, (value) {
+                              _buildToggleSwitch('Paint', isPaint, (value) {
                                 setState(() {
-                                  isTile = value;
+                                  isPaint = value;
                                 });
-                              }),
+                              }),                              
 
                               //break
                             const SizedBox(height: 16),
@@ -642,9 +642,9 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
                                           address3,
                                           town,
                                           customerTypeId,
-                                          isMasonry.toString(),
-                                          isWaterproofing.toString(),
-                                          isFlooring.toString(),
+                                          isMasonry,
+                                          isWaterproofing,
+                                          isFlooring,
                                           organizationColor,
                                           superiorOrganization,
                                           isCement,
@@ -658,6 +658,13 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
                                         isWaterproofing = false;
                                         isFlooring = false;
                                       }
+                                       if (organizationType == "Project"){
+                                          isCement = false;
+                                          isTile = false;
+                                          isWaterProof = false;
+                                          isSansAndMetal = false;
+                                          isPaint = false;
+                                       }
 
                                       if (_selectedRoute != null && selectedRouteNummer.isEmpty) {
                                         print("rrr");

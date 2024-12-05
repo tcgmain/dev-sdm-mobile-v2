@@ -257,11 +257,11 @@ class _ApprovedOrganizationListViewState extends State<ApprovedOrganizationListV
                                       String isMasonry = organizations.ymasonry?.toString() ?? 'Unnamed Route';
                                       String isWaterproofing = organizations.ywaterpr?.toString() ?? 'Unnamed Route';
                                       String isFlooring = organizations.yflooring?.toString() ?? 'Unnamed Route';
-                                      String isCement = organizations.yscemet.toString();
-                                      String isPaint = organizations.yspaint.toString();
-                                      String isTile= organizations.ystilea.toString();
-                                      String isWaterProof = organizations.yswaterp.toString();
-                                      String isSansAndMetal = organizations.yscemet.toString();
+                                      String isCement = organizations.yscemet.toString() ?? 'Unnamed Route';
+                                      String isPaint = organizations.yspaint.toString() ?? 'Unnamed Route';
+                                      String isTile= organizations.ystilea.toString() ?? 'Unnamed Route';
+                                      String isWaterProof = organizations.yswaterp.toString() ?? 'Unnamed Route';
+                                      String isSansAndMetal = organizations.yscemet.toString() ?? 'Unnamed Route';
                                       String creationDate = organizations.erfass?.toString() ?? 'Unnamed Route';
                                       String approvedBy = organizations.yorgappu?.toString() ?? 'Unnamed Route';
                                       String approvedDate = organizations.yorgappdt?.toString() ?? 'Unnamed Route';

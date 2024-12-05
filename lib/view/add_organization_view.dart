@@ -665,14 +665,14 @@ class _AddOrganizationViewState extends State<AddOrganizationView> {
                                 isCement = value;
                               });
                             }),
+                            _buildToggleSwitch('Tile', isTile, (value) {
+                              setState(() {
+                                isTile = value;
+                              });
+                            }),
                             _buildToggleSwitch('Water Proofing', isWaterProof, (value) {
                               setState(() {
                                 isWaterProof = value;
-                              });
-                            }),
-                            _buildToggleSwitch('Paint', isPaint, (value) {
-                              setState(() {
-                                isPaint = value;
                               });
                             }),
                             _buildToggleSwitch('Sand / Metal', isSansAndMetal, (value) {
@@ -680,11 +680,12 @@ class _AddOrganizationViewState extends State<AddOrganizationView> {
                                 isSansAndMetal = value;
                               });
                             }),
-                            _buildToggleSwitch('Tile', isTile, (value) {
+                             _buildToggleSwitch('Paint', isPaint, (value) {
                               setState(() {
-                                isTile = value;
+                                isPaint = value;
                               });
                             }),
+                            
                           ],
 
                           Center(

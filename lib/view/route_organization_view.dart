@@ -151,14 +151,14 @@ class _RouteOrganizationViewState extends State<RouteOrganizationView> {
                 isMasonry: bool.parse(isMasonry),
                 isWaterproofing: bool.parse(isWaterproofing),
                 isFlooring: bool.parse(isFlooring),
+                userOrganizationNummer: widget.userOrganizationNummer,
+                designationNummer: widget.designationNummer,
+                organizationColor: organizationColor,
                 isCement: bool.parse(yscemet),
                 isPaint: bool.parse(yspaint),
                 isWaterProof: bool.parse(yswaterp),
                 isSansAndMetal: bool.parse(ysanmet),
                 isTile: bool.parse(ystilea),
-                userOrganizationNummer: widget.userOrganizationNummer,
-                designationNummer: widget.designationNummer,
-                organizationColor: organizationColor,
                 superiorOrganizationNummer: superiorOrganizationNummer,
               )),
     );
@@ -297,11 +297,11 @@ class _RouteOrganizationViewState extends State<RouteOrganizationView> {
                                       final sequence = organizations.ysequno.toString();
                                       final nextVisitDueDate = organizations.ynxtvisitdat?.toString() ?? '';
                                       final yactiv = organizations.yactiv.toString();
-                                      String isCement = organizations.yscemet.toString();
-                                      String isPaint = organizations.yspaint.toString();
-                                      String isTile= organizations.ystilea.toString();
-                                      String isWaterProof = organizations.yswaterp.toString();
-                                      String isSansAndMetal = organizations.yscemet.toString();
+                                      final isCement = organizations.yscemet.toString() ;
+                                      final isPaint = organizations.yspaint.toString() ;
+                                      final isTile= organizations.ystilea.toString() ;
+                                      final isWaterProof = organizations.yswaterp.toString() ;
+                                      final isSansAndMetal = organizations.yscemet.toString() ;
 
                                       // Parse the nextVisitDueDate to DateTime
                                       DateTime? nextVisitDate;

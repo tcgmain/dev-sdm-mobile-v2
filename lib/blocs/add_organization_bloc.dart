@@ -43,10 +43,10 @@ class AddOrganizationBloc {
       organizationColor,
       superiorOrganization,
       isCement,
-      isPaint,
       isTile,
       isWaterProof,
       isSansAndMetal,
+      isPaint,
       ) async {
     if (_addOrganizationController?.isClosed ?? true) return;
     addOrganizationSink.add(Response.loading(''));
@@ -76,10 +76,10 @@ class AddOrganizationBloc {
           organizationColor.toString(),
           superiorOrganization.toString(),
           isCement.toString(),
-          isPaint.toString(),
           isTile.toString(),
           isWaterProof.toString(),
-          isSansAndMetal.toString());
+          isSansAndMetal.toString(),
+          isPaint.toString());
       if (_addOrganizationController?.isClosed ?? true) return;
       addOrganizationSink.add(Response.completed(res));
       print("ADD ORGANIZATION SUCCESS");

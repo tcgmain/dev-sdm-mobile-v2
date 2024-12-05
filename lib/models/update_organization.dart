@@ -41,35 +41,35 @@ class UpdateOrganization {
   bool yflooring;
   bool yorgapp;
   String yselcolour;
-  String yscemet;
-  String ystilea;
-  String yswaterp;
-  String ysanmet;
-  String yspaint;
+  bool yscemet;
+  bool ystilea;
+  bool yswaterp;
+  bool ysanmet;
+  bool yspaint;
 
   factory UpdateOrganization.fromJson(Map<String, dynamic> json) => UpdateOrganization(
-        id: json["id"] ,
-        yphone1: json["yphone1"] ,
-        yphone2: json["yphone2"] ,
-        ycustyp: json["ycustyp"] ,
-        nummer: json["nummer"] ,
-        yaddressl3: json["yaddressl3"] ,
-        yaddressl4: json["yaddressl4"] ,
-        yaddressl1: json["yaddressl1"] ,
-        yaddressl2: json["yaddressl2"] ,
+        id: json["id"] ?? "",
+        yphone1: json["yphone1"]  ?? "",
+        yphone2: json["yphone2"] ?? "",
+        ycustyp: json["ycustyp"] ?? "",
+        nummer: json["nummer"] ?? "",
+        yaddressl3: json["yaddressl3"] ?? "",
+        yaddressl4: json["yaddressl4"] ?? "",
+        yaddressl1: json["yaddressl1"] ?? "",
+        yaddressl2: json["yaddressl2"] ?? "",
         table: json["table"] != null ? List<dynamic>.from(json["table"]) : [],
-        yemail: json["yemail"] ,
-        yowname: json["yowname"] ,
-        ymasonry: json["ymasonry"] ,
-        ywaterpr: json["ywaterpr"] ,
-        yflooring: json["yflooring"] ,
-        yorgapp: json["yorgapp"] ,
-        yselcolour: json["yselcolour"] ,
-        yscemet: json["yscemet"] ,
-        ystilea: json["ystilea"] ,
-        yswaterp: json["yswaterp"] ,
-        ysanmet: json["ysanmet"] ,
-        yspaint: json["yspaint"] ,
+        yemail: json["yemail"] ?? "",
+        yowname: json["yowname"] ?? "",
+        ymasonry: json["ymasonry"] ?? false,
+        ywaterpr: json["ywaterpr"] ?? false,
+        yflooring: json["yflooring"] ?? false,
+        yorgapp: json["yorgapp"] ?? false,
+        yselcolour: json["yselcolour"] ?? "",
+        yscemet: json["yscemet"] ?? false,
+        ystilea: json["ystilea"] ?? false,
+        yswaterp: json["yswaterp"] ?? false,
+        ysanmet: json["ysanmet"] ?? false,
+        yspaint: json["yspaint"] ?? false,
       );
 
   Map<String, dynamic> toJson() => {
