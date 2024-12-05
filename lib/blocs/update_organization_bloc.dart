@@ -48,6 +48,8 @@ class UpdateOrganizationBloc {
           isSansAndMetal.toString(),
           isPaint.toString()
           );
+          print("Sand and metal: $isSansAndMetal");
+          print("Paint : $isPaint");
       if (_updateOrganizationController?.isClosed ?? true) return;
       updateOrganizationSink.add(Response.completed(res));
       print("UPDATE ORGANIZATION SUCCESSFUL");

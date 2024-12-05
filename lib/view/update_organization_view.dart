@@ -216,10 +216,10 @@ class _UpdateOrganizationViewState extends State<UpdateOrganizationView> {
     isWaterproofing = widget.isWaterproofing;
     isFlooring = widget.isFlooring;
     isCement = widget.isCement;
-    isPaint =widget.isPaint;
     isTile = widget.isTile;
     isWaterProof = widget.isWaterProof;
     isSansAndMetal = widget.isSansAndMetal;
+    isPaint =widget.isPaint;
 
     _customerTypeBloc = CustomerTypeBloc();
     _updateOrganizationBloc = UpdateOrganizationBloc();

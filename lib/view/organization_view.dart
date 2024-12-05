@@ -139,10 +139,10 @@ class _OrganizationViewState extends State<OrganizationView> {
                 isWaterproofing: bool.parse(ywaterpr),
                 isFlooring: bool.parse(yflooring),
                 isCement: bool.parse(yscemet),
-                isPaint: bool.parse(yspaint),
-                isSansAndMetal: bool.parse(ysanmet),
                 isTile: bool.parse(ystilea),
                 isWaterProof: bool.parse(yswaterp),
+                isSansAndMetal: bool.parse(ysanmet),
+                isPaint: bool.parse(yspaint),
                 userOrganizationNummer: widget.userOrganizationNummer,
                 designationNummer: widget.designationNummer,
                 organizationColor: organizationColor,
@@ -352,8 +352,8 @@ class _OrganizationViewState extends State<OrganizationView> {
                                             String isCement = organizations.yscemet?.toString() ?? 'Unnamed Route';
                                             String isTile = organizations.ystilea?.toString() ?? 'Unnamed Route';
                                             String isWaterProof= organizations.yswaterp?.toString() ?? 'Unnamed Route';
-                                            String isPaint= organizations.yspaint?.toString() ?? 'Unnamed Route';
                                             String isSansAndMetal= organizations.ysanmet?.toString() ?? 'Unnamed Route';
+                                            String isPaint= organizations.yspaint?.toString() ?? 'Unnamed Route';
                                             // final yscemet = organizations.yscemet;
                                             // final ystilea = organizations.ystilea?.toString() ?? 'Unnamed Route';
                                             // final yswaterp = organizations.yswaterp?.toString() ?? 'Unnamed Route';
@@ -393,8 +393,8 @@ class _OrganizationViewState extends State<OrganizationView> {
                                                             isCement,
                                                             isTile,
                                                             isWaterProof,
-                                                            isPaint,
                                                             isSansAndMetal,
+                                                            isPaint,
                                                             organizationColour);
                                                       },
                                                       backgroundColor: CustomColors.buttonColor,
