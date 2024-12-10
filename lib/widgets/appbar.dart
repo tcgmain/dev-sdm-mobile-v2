@@ -94,14 +94,14 @@ class _CommonAppBarState extends State<CommonAppBar> {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => DashboardView(
-                              weeklySummary: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-                                  // username: username,
-                                  // userNummer: userNummer,
-                                  // userOrganizationNummer: userOrganizationNummer,
-                                  // loggedUserNummer: userNummer,
-                                  // isTeamMemberUi: false,
-                                  // designationNummer: userDesignationNummer,
+                            builder: (context) => HomeV2Page(
+                              //weeklySummary: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                                  username: username,
+                                  userNummer: userNummer,
+                                  userOrganizationNummer: userOrganizationNummer,
+                                  loggedUserNummer: userNummer,
+                                  isTeamMemberUi: false,
+                                  designationNummer: userDesignationNummer,
                                 )),
                         (Route<dynamic> route) => false,
                       );
@@ -110,14 +110,14 @@ class _CommonAppBarState extends State<CommonAppBar> {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => DashboardView(
-                              weeklySummary: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-                                  // username: username,
-                                  // userNummer: userNummer,
-                                  // userOrganizationNummer: userOrganizationNummer,
-                                  // loggedUserNummer: userNummer,
-                                  // isTeamMemberUi: false,
-                                  // designationNummer: userDesignationNummer,
+                            builder: (context) => HomePage(
+                              // weeklySummary: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                                  username: username,
+                                  userNummer: userNummer,
+                                  userOrganizationNummer: userOrganizationNummer,
+                                  loggedUserNummer: userNummer,
+                                  isTeamMemberUi: false,
+                                  designationNummer: userDesignationNummer,
                                 )),
                         (Route<dynamic> route) => false,
                       );
