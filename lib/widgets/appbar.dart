@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sdm/utils/constants.dart';
 import 'package:sdm/view/approve_view.dart';
 import 'package:sdm/view/change_password_view.dart';
+import 'package:sdm/view/dashboard_view.dart';
 import 'package:sdm/view/home_v2_view.dart';
 import 'package:sdm/view/home_view.dart';
 import 'package:sdm/view/login_view.dart';
@@ -93,13 +94,14 @@ class _CommonAppBarState extends State<CommonAppBar> {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => HomeV2Page(
-                                  username: username,
-                                  userNummer: userNummer,
-                                  userOrganizationNummer: userOrganizationNummer,
-                                  loggedUserNummer: userNummer,
-                                  isTeamMemberUi: false,
-                                  designationNummer: userDesignationNummer,
+                            builder: (context) => DashboardView(
+                              weeklySummary: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                                  // username: username,
+                                  // userNummer: userNummer,
+                                  // userOrganizationNummer: userOrganizationNummer,
+                                  // loggedUserNummer: userNummer,
+                                  // isTeamMemberUi: false,
+                                  // designationNummer: userDesignationNummer,
                                 )),
                         (Route<dynamic> route) => false,
                       );
@@ -108,13 +110,14 @@ class _CommonAppBarState extends State<CommonAppBar> {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => HomePage(
-                                  username: username,
-                                  userNummer: userNummer,
-                                  userOrganizationNummer: userOrganizationNummer,
-                                  loggedUserNummer: userNummer,
-                                  isTeamMemberUi: false,
-                                  designationNummer: userDesignationNummer,
+                            builder: (context) => DashboardView(
+                              weeklySummary: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                                  // username: username,
+                                  // userNummer: userNummer,
+                                  // userOrganizationNummer: userOrganizationNummer,
+                                  // loggedUserNummer: userNummer,
+                                  // isTeamMemberUi: false,
+                                  // designationNummer: userDesignationNummer,
                                 )),
                         (Route<dynamic> route) => false,
                       );
