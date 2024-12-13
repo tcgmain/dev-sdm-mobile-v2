@@ -9,7 +9,7 @@ class DashboardView extends StatefulWidget {
 
   const DashboardView({
     super.key,
-    this.weeklySummary = const [],
+    required this.weeklySummary,
     required this.isShowingMainData,
   });
 
