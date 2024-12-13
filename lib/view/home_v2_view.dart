@@ -24,8 +24,7 @@ class HomeV2Page extends StatefulWidget {
     required this.loggedUserNummer,
     required this.isTeamMemberUi,
     required this.designationNummer,
-    this.initialTabIndex = 0, 
-    //required List<double> weeklySummary,
+    this.initialTabIndex = 0,
   });
 
   @override
