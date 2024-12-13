@@ -10,6 +10,7 @@ import 'package:sdm/view/home_view.dart';
 import 'package:sdm/view/login_view.dart';
 import 'package:sdm/view/profile_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sdm/view/notification_view.dart';
 
 class CommonAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
@@ -74,9 +75,24 @@ class _CommonAppBarState extends State<CommonAppBar> {
           ),
         ),
       ),
-      title: Text(
-        widget.title,
-        style: TextStyle(color: CustomColors.appBarTextColor, fontSize: getFontSizeLarge()),
+      title: Row(
+        children: [
+          Text(
+            widget.title,
+            style: TextStyle(color: CustomColors.appBarTextColor, fontSize: getFontSizeLarge()),
+          ),
+          const SizedBox(width: 100), 
+          IconButton(
+            icon: const Icon(Icons.notifications_outlined),
+            onPressed: () {
+                 Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const NotificationView(username: '', userNummer: '', userId: '', userOrganizationNummer: true, userDesignationNummer: '', ), // Replace with your NotificationView class
+          ),
+        );
+              }, 
+            ),
+        ],
       ),
       leading: widget.isHomePage
           ? null
@@ -95,7 +111,6 @@ class _CommonAppBarState extends State<CommonAppBar> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => HomeV2Page(
-                              //weeklySummary: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
                                   username: username,
                                   userNummer: userNummer,
                                   userOrganizationNummer: userOrganizationNummer,
@@ -111,7 +126,6 @@ class _CommonAppBarState extends State<CommonAppBar> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => HomePage(
-                              // weeklySummary: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
                                   username: username,
                                   userNummer: userNummer,
                                   userOrganizationNummer: userOrganizationNummer,
