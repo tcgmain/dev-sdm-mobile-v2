@@ -74,9 +74,19 @@ class _CommonAppBarState extends State<CommonAppBar> {
           ),
         ),
       ),
-      title: Text(
-        widget.title,
-        style: TextStyle(color: CustomColors.appBarTextColor, fontSize: getFontSizeLarge()),
+      title: 
+      Row(
+        children: [
+           Text(
+            widget.title,
+            style: TextStyle(color: CustomColors.appBarTextColor, fontSize: getFontSizeLarge()),
+          ),
+          const SizedBox(width: 10), 
+          const Icon(
+            Icons.notification_add, 
+            color: CustomColors.appBarTextColor,
+          ),
+        ],
       ),
       leading: widget.isHomePage
           ? null
@@ -95,7 +105,6 @@ class _CommonAppBarState extends State<CommonAppBar> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => HomeV2Page(
-                              //weeklySummary: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
                                   username: username,
                                   userNummer: userNummer,
                                   userOrganizationNummer: userOrganizationNummer,
@@ -111,7 +120,6 @@ class _CommonAppBarState extends State<CommonAppBar> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => HomePage(
-                              // weeklySummary: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
                                   username: username,
                                   userNummer: userNummer,
                                   userOrganizationNummer: userOrganizationNummer,

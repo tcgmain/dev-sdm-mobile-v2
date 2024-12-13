@@ -5,6 +5,7 @@ import 'package:clipboard/clipboard.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:sdm/blocs/user_details_bloc.dart';
 import 'package:sdm/models/user_details.dart';
+import 'package:sdm/view/dashboard_view.dart';
 import 'package:sdm/view/home_v2_view.dart';
 import 'package:sdm/view/home_view.dart';
 import 'package:sdm/widgets/app_button.dart';
@@ -18,7 +19,6 @@ import 'package:sdm/utils/constants.dart';
 import 'package:sdm/widgets/text_field.dart' as text_field;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:sdm/view/dashboard_view.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -104,45 +104,31 @@ class _LoginPageState extends State<LoginPage> {
     return CommonAppButton(
       buttonText: "Login",
       onPressed: () async {
-        List<double> weeklySummary = [4.40, 8.26, 1.23, 8.00, 2.69, 5.67, 7.31];
+        if (usernameController.text.toString() == "" || passwordController.text.toString() == "") {
+          showErrorAlertDialog(context, "Please enter username and password");
+        } else {
+          _isErrorMessageShown = false;
+          _isUserDetailsErrorMessageShown = false;
 
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => DashboardView(
-            weeklySummary: weeklySummary, 
-            isShowingMainData: true,
-          //String? deviceId = await _getId();
-          //print("THIS IS DEVICE ID:  $deviceId");
-
-          )));
+          //  List<double> weeklySummary = [4.40, 8.26, 1.23, 8.00, 2.69, 5.67, 7.31];
+          //   Navigator.of(context).push(MaterialPageRoute(
+          //     builder: (context) => DashboardView(
+          //       weeklySummary: weeklySummary, 
+          //       isShowingMainData: true,
+          //     )));
 
 
-        // if (usernameController.text.toString() == "" || passwordController.text.toString() == "") {
-        //   showErrorAlertDialog(context, "Please enter username and password");
-        // } else {
-        //   _isErrorMessageShown = false;
-        //   _isUserDetailsErrorMessageShown = false;
+          String? deviceId = await _getId();
+          print("THIS IS DEVICE ID:  $deviceId");
 
-        //   String? deviceId = await _getId();
-        //   print("THIS IS DEVICE ID:  $deviceId");
-
-          
-         
-        //   _loginBloc.login(usernameController.text.toString(), passwordController.text.toString(), deviceId.toString());
-        //   _isUserDetailsErrorMessageShown = false;
-        //   if (_saveCredentials) {
-        //     _saveCredentialsToPrefs();
-        //   } else {
-        //     _clearCredentials();
-        //   }
-        // }
-
-         _loginBloc.login(usernameController.text.toString(), passwordController.text.toString(), deviceId.toString());
+          _loginBloc.login(usernameController.text.toString(), passwordController.text.toString(), deviceId.toString());
           _isUserDetailsErrorMessageShown = false;
           if (_saveCredentials) {
             _saveCredentialsToPrefs();
           } else {
             _clearCredentials();
           }
+        }
       },
     );
   }
@@ -285,7 +271,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 20.0),
                       loginResponse(),
-                      //userDetailsResponse()
+                      userDetailsResponse()
                     ]),
                   ),
                 ),
@@ -381,58 +367,58 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               );
 
-            // case Status.COMPLETED:
-            //   var userNummer = snapshot.data!.data![0].nummer.toString();
-            //   var userOrganizationNummer = snapshot.data!.data![0].yorgNummer.toString();
-            //   var designationNummer = snapshot.data!.data![0].designationNummer.toString();
-            //   (isDataViewer(designationNummer))
-            //       ? WidgetsBinding.instance.addPostFrameCallback((_) {
-            //           Navigator.pushAndRemoveUntil(
-            //             context,
-            //             MaterialPageRoute(
-            //                 builder: (context) => HomeV2Page(
-            //                       username: username,
-            //                       userNummer: userNummer,
-            //                       userOrganizationNummer: userOrganizationNummer,
-            //                       loggedUserNummer: userNummer,
-            //                       isTeamMemberUi: false,
-            //                       designationNummer: designationNummer,
-            //                     )),
-            //             (Route<dynamic> route) => false,
-            //           );
-            //         })
-            //       : WidgetsBinding.instance.addPostFrameCallback((_) {
-            //           Navigator.pushAndRemoveUntil(
-            //             context,
-            //             MaterialPageRoute(
-            //                 builder: (context) => HomePage(
-            //                       username: username,
-            //                       userNummer: userNummer,
-            //                       userOrganizationNummer: userOrganizationNummer,
-            //                       loggedUserNummer: userNummer,
-            //                       isTeamMemberUi: false,
-            //                       designationNummer: designationNummer,
-            //                     )),
-            //             (Route<dynamic> route) => false,
-            //           );
-            //         });
-
-            //   usernameController = TextEditingController(text: '');
-            //   passwordController = TextEditingController(text: '');
-            //   break;
-            // case Status.ERROR:
-            //   if (!_isUserDetailsErrorMessageShown) {
-            //     WidgetsBinding.instance.addPostFrameCallback((_) {
-            //       showErrorAlertDialog(context, snapshot.data!.message.toString());
-            //       setState(() {
-            //         _isErrorMessageShown = true;
-            //       });
-            //     });
-            //   }
             case Status.COMPLETED:
-              // TODO: Handle this case.
+              var userNummer = snapshot.data!.data![0].nummer.toString();
+              var userOrganizationNummer = snapshot.data!.data![0].yorgNummer.toString();
+              var designationNummer = snapshot.data!.data![0].designationNummer.toString();
+              (isDataViewer(designationNummer))
+                  ? WidgetsBinding.instance.addPostFrameCallback((_) {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HomeV2Page(
+                                  username: username,
+                                  userNummer: userNummer,
+                                  userOrganizationNummer: userOrganizationNummer,
+                                  loggedUserNummer: userNummer,
+                                  isTeamMemberUi: false,
+                                  designationNummer: designationNummer,
+                                )),
+                        (Route<dynamic> route) => false,
+                      );
+                    })
+                  : WidgetsBinding.instance.addPostFrameCallback((_) {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HomePage(
+                                  username: username,
+                                  userNummer: userNummer,
+                                  userOrganizationNummer: userOrganizationNummer,
+                                  loggedUserNummer: userNummer,
+                                  isTeamMemberUi: false,
+                                  designationNummer: designationNummer,
+                                )),
+                        (Route<dynamic> route) => false,
+                      );
+                    });
+
+              usernameController = TextEditingController(text: '');
+              passwordController = TextEditingController(text: '');
+              break;
             case Status.ERROR:
-              // TODO: Handle this case.
+              if (!_isUserDetailsErrorMessageShown) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  showErrorAlertDialog(context, snapshot.data!.message.toString());
+                  setState(() {
+                    _isErrorMessageShown = true;
+                  });
+                });
+              }
+            // case Status.COMPLETED:
+            //   // TODO: Handle this case.
+            // case Status.ERROR:
+            //   // TODO: Handle this case.
           }
         }
         return Container();
