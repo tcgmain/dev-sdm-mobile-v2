@@ -42,6 +42,7 @@ dependencies:
   confetti: ^0.8.0
   fl_chart: ^0.69.2
   google_fonts: ^6.2.1
+  pie_chart: ^5.4.0
 
 dev_dependencies:
   flutter_test:
