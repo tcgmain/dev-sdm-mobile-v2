@@ -8,6 +8,7 @@ import 'package:sdm/view/dashboard_view.dart';
 import 'package:sdm/view/home_v2_view.dart';
 import 'package:sdm/view/home_view.dart';
 import 'package:sdm/view/login_view.dart';
+import 'package:sdm/view/notification_view.dart';
 import 'package:sdm/view/profile_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,6 +18,7 @@ class CommonAppBar extends StatefulWidget implements PreferredSizeWidget {
   final bool isHomePage;
   final List<Widget>? customActions;
   final bool? isPendingApprovalDisabled;
+  final bool showNotificationIcon;
 
   const CommonAppBar({
     super.key,
@@ -25,6 +27,7 @@ class CommonAppBar extends StatefulWidget implements PreferredSizeWidget {
     required this.isHomePage,
     this.customActions,
     this.isPendingApprovalDisabled,
+    this.showNotificationIcon = true,
   });
 
   @override
@@ -82,9 +85,17 @@ class _CommonAppBarState extends State<CommonAppBar> {
             style: TextStyle(color: CustomColors.appBarTextColor, fontSize: getFontSizeLarge()),
           ),
           const SizedBox(width: 10), 
-          const Icon(
-            Icons.notification_add, 
-            color: CustomColors.appBarTextColor,
+          IconButton(
+            icon:  const Icon(Icons.notifications_outlined),
+            color: CustomColors.appBarTextColor, 
+            onPressed: () { 
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const NotificationView(),
+                  ),
+                );
+             },
+            
           ),
         ],
       ),

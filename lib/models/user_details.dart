@@ -15,6 +15,7 @@ class UserDetails {
     this.yhrisid,
     this.yorgNummer,
     this.designationNummer,
+    this.ytterritoryNummer,
   });
 
   String? ynic;
@@ -32,6 +33,7 @@ class UserDetails {
   String? yhrisid;
   String? yorgNummer;
   String? designationNummer;
+  String? ytterritoryNummer;
 
   factory UserDetails.fromJson(Map<String, dynamic> json) => UserDetails(
       ynic: json["ypasdef^passmitarb^ynic"],
@@ -48,7 +50,8 @@ class UserDetails {
       ydepcodel: json["ypasdef^passmitarb^ydepcodel"],
       yhrisid: json["ypasdef^passmitarb^yhrisid"],
       yorgNummer: json["yorg^nummer"],
-      designationNummer: json["ypasdef^passmitarb^ytitle^nummer"]);
+      designationNummer: json["ypasdef^passmitarb^ytitle^nummer"],
+      ytterritoryNummer: json["ytterritory^nummer"]);
 
   Map<String, dynamic> toJson() => {
         "ypasdef^passmitarb^ynic": ynic,
@@ -66,5 +69,6 @@ class UserDetails {
         "ypasdef^passmitarb^yhrisid": yhrisid,
         "yorg^nummer": yorgNummer,
         "ypasdef^passmitarb^ytitle^nummer": designationNummer,
+        "ytterritory^nummer": ytterritoryNummer,
       };
 }
