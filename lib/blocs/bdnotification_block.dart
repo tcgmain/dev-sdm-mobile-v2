@@ -5,39 +5,38 @@ import 'package:sdm/repository/bdnotification_repository.dart';
 
 class BdnotificationBlock {
   late BdnotificationRepository _bdnotificationRepository;
-  StreamController? _bdnotification_controller;               
+  StreamController<ResponseList<Bdnotification>>? _bdnotification_controller;
 
+  // Sink to add data into the stream
   StreamSink<ResponseList<Bdnotification>> get bdnotificationSink =>
-      _bdnotification_controller!.sink as StreamSink<ResponseList<Bdnotification>>;
-   StreamSink<ResponseList<Bdnotification>> get bdnotificationStream =>
-      _bdnotification_controller!.sink as StreamSink<ResponseList<Bdnotification>>;
+      _bdnotification_controller!.sink;
 
-  BdnotificationBlock(){
-    _bdnotification_controller = StreamController<ResponseList<Bdnotification>>.broadcast();
+  // Stream to listen to data
+  Stream<ResponseList<Bdnotification>> get bdnotificationStream =>
+      _bdnotification_controller!.stream;
+
+  BdnotificationBlock() {
+    _bdnotification_controller =
+        StreamController<ResponseList<Bdnotification>>.broadcast();
     _bdnotificationRepository = BdnotificationRepository();
-    
   }
 
-  getBdnotification(String yterritory_nummer) async {
+  getBdnotification(String yterritoryNummer) async {
     try {
-      List<Bdnotification> res = await _bdnotificationRepository.getBdnotification(yterritory_nummer);
+      List<Bdnotification> res =
+          await _bdnotificationRepository.getBdnotification(yterritoryNummer);
       if (_bdnotification_controller?.isClosed ?? true) return;
       bdnotificationSink.add(ResponseList.completed(res));
-      print("Retrive Birthday Details Successfully !!");
+      print("Retrieved Birthday Details Successfully!");
     } catch (e) {
       if (_bdnotification_controller?.isClosed ?? true) return;
       bdnotificationSink.add(ResponseList.error(e.toString()));
-      print("Brithday ERROR");
+      print("Birthday ERROR");
       print(e);
     }
-  }
-
-  Future<void> getOrganizationsForTerritory(String territoryNumber) async{
-    
   }
 
   dispose() {
     _bdnotification_controller?.close();
   }
-
 }
