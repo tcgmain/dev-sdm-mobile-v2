@@ -52,8 +52,14 @@ class _NotificationView extends State<NotificationView> {
   bool isBirthday(String? orgOwnerBd) {
     try {
       if (orgOwnerBd == null) return false;
-      String currentDate = DateFormat('dd/MM/yyyy').format(DateTime.now());
-      return orgOwnerBd == currentDate;
+      //String currentDate = DateFormat('dd/MM/yyyy').format(DateTime.now());
+      DateTime userBirthDate = DateFormat('dd/MM/yyyy').parse(orgOwnerBd);
+
+      DateTime today = DateTime.now();
+
+      return userBirthDate.day == today.day && userBirthDate.month == today.month;
+
+      //return orgOwnerBd == currentDate;
     } catch (e) {
       print("Error in isBirthday: $e");
       return false;

@@ -415,10 +415,10 @@ class _LoginPageState extends State<LoginPage> {
                   });
                 });
               }
-            // case Status.COMPLETED:
-            //   // TODO: Handle this case.
-            // case Status.ERROR:
-            //   // TODO: Handle this case.
+            case Status.COMPLETED:
+              // TODO: Handle this case.
+            case Status.ERROR:
+              // TODO: Handle this case.
           }
         }
         return Container();

@@ -108,24 +108,27 @@ class _MarkVisitViewState extends State<MarkVisitView> {
     _markVisitBloc = MarkVisitBloc();
 
   DateTime currentDate = DateTime.now();
-    
-  String formattedDate = DateFormat("dd/MM/yyyy").format(currentDate);
- 
   String birthdayString = widget.ownerBirthday;
 
-  if (formattedDate == birthdayString) {
-    if (!_isBirthdayMessageShown) {
-      _isBirthdayMessageShown = true;
+  try {
+    DateTime userBirthDate = DateFormat("dd/MM/yyyy").parse(birthdayString);
 
-      SchedulerBinding.instance.addPostFrameCallback((_) {
-        showDialog(
-          context: context,
-          builder: (context) => BirthdayPopup(
-            ownerName: widget.ownerName,
-          ),
-        );
-      });
+    if (currentDate.day == userBirthDate.day && currentDate.month == userBirthDate.month) {
+      if (!_isBirthdayMessageShown) {
+        _isBirthdayMessageShown = true;
+
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+          showDialog(
+            context: context,
+            builder: (context) => BirthdayPopup(
+              ownerName: widget.ownerName,
+            ),
+          );
+        });
+      }
     }
+  } catch (e) {
+    print("Error parsing or comparing birthday: $e");
   }
 }
 

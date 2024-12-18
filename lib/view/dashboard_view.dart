@@ -328,7 +328,7 @@ class _DashboardViewState extends State<DashboardView> {
                                 const FlSpot(9.5, 3),
                                 const FlSpot(11, 4),
                               ], 
-                              isCurved: true,
+                              isCurved: false,
                               barWidth: 3,
                               //color: Color.fromARGB(255, 96, 4, 12),
                               belowBarData: BarAreaData(
