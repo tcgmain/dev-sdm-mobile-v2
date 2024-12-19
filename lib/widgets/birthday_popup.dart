@@ -93,7 +93,7 @@ class _BirthdayPopupState extends State<BirthdayPopup> {
                 const SizedBox(height: 20),
                 Image.asset(
                   'images/white_cake.png',
-                  height: 200,
+                  height: 250,
                 ),
                 const SizedBox(height: 20),
               ],
