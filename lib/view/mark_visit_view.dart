@@ -116,7 +116,6 @@ class _MarkVisitViewState extends State<MarkVisitView> {
     if (currentDate.day == userBirthDate.day && currentDate.month == userBirthDate.month) {
       if (!_isBirthdayMessageShown) {
         _isBirthdayMessageShown = true;
-
         SchedulerBinding.instance.addPostFrameCallback((_) {
           showDialog(
             context: context,

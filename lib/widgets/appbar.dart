@@ -84,7 +84,7 @@ class _CommonAppBarState extends State<CommonAppBar> {
             widget.title,
             style: TextStyle(color: CustomColors.appBarTextColor, fontSize: getFontSizeLarge()),
           ),
-          const SizedBox(width: 10), 
+          const SizedBox(width: 1), 
           IconButton(
             icon:  const Icon(Icons.notifications_outlined),
             color: CustomColors.appBarTextColor, 
@@ -95,7 +95,6 @@ class _CommonAppBarState extends State<CommonAppBar> {
                   ),
                 );
              },
-            
           ),
         ],
       ),

@@ -145,8 +145,12 @@ class _NotificationView extends State<NotificationView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${notification.yowname} - ${notification.yorgowndob}",
+                    "${notification.yowname}'s Birthday is Today",
                     style: const TextStyle(color: Colors.white, fontSize: 17),
+                  ),
+                  const Text(
+                    "Don't miss the chnace to wish Him!",
+                    style: TextStyle(color: Colors.white, fontSize: 14),
                   ),
                 ],
               ),
