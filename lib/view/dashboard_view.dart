@@ -135,37 +135,47 @@ class _DashboardViewState extends State<DashboardView> {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Center(
-                      child: SizedBox(
-                        height: 250,
-                        child: PieChart(
-                          PieChartData(
-                            sections: dummyData
-                                .map(
-                                  (data) => PieChartSectionData(
-                                    color: Colors.primaries[dummyData.indexOf(data) % Colors.primaries.length],
-                                    value: data['value'].toDouble(),
-                                    title: "${data['value']}%",
-                                    radius: touchedIndex == dummyData.indexOf(data) ? 60 : 50,
-                                    titleStyle: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                )
-                                .toList(),
-                            pieTouchData: PieTouchData(
-                              touchCallback: (FlTouchEvent event, PieTouchResponse? pieTouchResponse) {
-                                setState(() {
-                                  if (!event.isInterestedForInteractions ||
-                                      pieTouchResponse == null ||
-                                      pieTouchResponse.touchedSection == null) {
-                                    touchedIndex = -1;
-                                    return;
-                                  }
-                                  touchedIndex = pieTouchResponse.touchedSection!.touchedSectionIndex;
-                                });
-                              },
+                      child: Card(
+                        color: const Color.fromARGB(128, 139, 0, 0).withOpacity(0.05), // Adding a card with opacity
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: SizedBox(
+                            height: 250,
+                            child: PieChart(
+                              PieChartData(
+                                sections: dummyData
+                                    .map(
+                                      (data) => PieChartSectionData(
+                                        color: Colors.primaries[dummyData.indexOf(data) % Colors.primaries.length],
+                                        value: data['value'].toDouble(),
+                                        title: "${data['value']}%",
+                                        radius: touchedIndex == dummyData.indexOf(data) ? 60 : 50,
+                                        titleStyle: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                                pieTouchData: PieTouchData(
+                                  touchCallback: (FlTouchEvent event, PieTouchResponse? pieTouchResponse) {
+                                    setState(() {
+                                      if (!event.isInterestedForInteractions ||
+                                          pieTouchResponse == null ||
+                                          pieTouchResponse.touchedSection == null) {
+                                        touchedIndex = -1;
+                                        return;
+                                      }
+                                      touchedIndex = pieTouchResponse.touchedSection!.touchedSectionIndex;
+                                    });
+                                  },
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -188,41 +198,67 @@ class _DashboardViewState extends State<DashboardView> {
                   SizedBox(
                     height: 200,
                     width: double.infinity,
-                    child: SingleChildScrollView(
-                      child: DataTable(
-                        columns: const [
-                          DataColumn(label: Text('ID',
-                          style: TextStyle(color: Colors.white),
-                          )),
-
-                          DataColumn(label: 
-                          Text('Name',
-                          style: TextStyle(color: Colors.white),
-                          )),
-
-                          DataColumn(label: Text('Age',
-                          style: TextStyle(color: Colors.white),
-                          )),
-                        ],
-                        rows: List.generate(
-                          20, 
-                          (index) => DataRow(cells: [
-                            DataCell(Text((index + 1).toString(),
-                            style: const TextStyle(color: Colors.white),
-                            )),
-
-                            DataCell(Text('Person ${index + 1}',
-                            style: const TextStyle(color: Colors.white),
-                            )),
-
-                            DataCell(Text('${20 + index % 10}',
-                            style: const TextStyle(color: Colors.white),
-                            )),
-                          ])
-                        )
+                    child: Card(
+                      color: const Color.fromARGB(128, 139, 0, 0).withOpacity(0.05), // Adding a card with opacity
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SingleChildScrollView(
+                          child: DataTable(
+                            columns: const [
+                              DataColumn(
+                                label: Text(
+                                  'ID',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  'Name',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  'Age',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ],
+                            rows: List.generate(
+                              20,
+                              (index) => DataRow(
+                                cells: [
+                                  DataCell(
+                                    Text(
+                                      (index + 1).toString(),
+                                      style: const TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                  DataCell(
+                                    Text(
+                                      'Person ${index + 1}',
+                                      style: const TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                  DataCell(
+                                    Text(
+                                      '${20 + index % 10}',
+                                      style: const TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
+
                   const SizedBox(
                     height: 20,
                      child: 
@@ -248,96 +284,102 @@ class _DashboardViewState extends State<DashboardView> {
                     padding: const EdgeInsets.all(10.0),
                     child: SizedBox(
                       height: 400,
-                      child: LineChart(
-                        LineChartData(
-                          minX: 0,
-                          maxX: 11,
-                          minY: 0,
-                          maxY: 6,
-                          gridData: FlGridData(
-                            show: true,
-                            drawHorizontalLine: true,
-                            getDrawingHorizontalLine: (value) {
-                              return const FlLine(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                strokeWidth: 0.2,
-                              );
-                            },
-                            drawVerticalLine: true,
-                            getDrawingVerticalLine: (value) {
-                              return const FlLine(
-                                 color: Color.fromARGB(255, 255, 255, 255),
-                                strokeWidth: 0.2,
-                              );
-                            },
-                          ),
-                          borderData: FlBorderData(
-                            show: true,
-                            border: Border.all(width: 1)
-                          ),
-                           titlesData: FlTitlesData(
-                            leftTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                getTitlesWidget: (value, meta) {
-                                  return  Text(
-                                    value.toString(),
-                                    style: const TextStyle(
-                                      color: Color.fromARGB(255, 255, 255, 255), // Green color for left axis
-                                      fontSize: 10,
-                                    ),
-                                  );
-                                }
-                              ),
-                            ),
-                    
-                             bottomTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                getTitlesWidget: (value, meta) {
-                                  return  Text(
-                                    value.toString(),
-                                    style: const TextStyle(
-                                      color: Color.fromARGB(255, 255, 255, 255), // Green color for left axis
-                                      fontSize: 10,
-                                    ),
-                                  );
-                                }
-                              ),
-                            ),
-                            rightTitles: const AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: false,
-                              ),
-                            ),
-                    
-                            topTitles: const AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: false,
-                              )
-                            )
-                          ),
-                          lineBarsData: [
-                            LineChartBarData(
-                              spots: [ 
-                                const FlSpot(0, 3),
-                                const FlSpot(2.6, 2),
-                                const FlSpot(4.9, 5),
-                                const FlSpot(6.8, 2.5),
-                                const FlSpot(8, 4),
-                                const FlSpot(9.5, 3),
-                                const FlSpot(11, 4),
-                              ], 
-                              isCurved: false,
-                              barWidth: 3,
-                              //color: Color.fromARGB(255, 96, 4, 12),
-                              belowBarData: BarAreaData(
+                      child: Card(
+                        color: const Color.fromARGB(128, 139, 0, 0).withOpacity(0.05), // Increased opacity for the card
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: LineChart(
+                            LineChartData(
+                              minX: 0,
+                              maxX: 11,
+                              minY: 0,
+                              maxY: 6,
+                              gridData: FlGridData(
                                 show: true,
+                                drawHorizontalLine: true,
+                                getDrawingHorizontalLine: (value) {
+                                  return const FlLine(
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    strokeWidth: 0.2,
+                                  );
+                                },
+                                drawVerticalLine: true,
+                                getDrawingVerticalLine: (value) {
+                                  return const FlLine(
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    strokeWidth: 0.2,
+                                  );
+                                },
                               ),
-                              
-                            )
-                          ]
-                        )
+                              borderData: FlBorderData(
+                                show: true,
+                                border: Border.all(width: 1),
+                              ),
+                              titlesData: FlTitlesData(
+                                leftTitles: AxisTitles(
+                                  sideTitles: SideTitles(
+                                    showTitles: true,
+                                    getTitlesWidget: (value, meta) {
+                                      return Text(
+                                        value.toString(),
+                                        style: const TextStyle(
+                                          color: Color.fromARGB(255, 255, 255, 255),
+                                          fontSize: 10,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                bottomTitles: AxisTitles(
+                                  sideTitles: SideTitles(
+                                    showTitles: true,
+                                    getTitlesWidget: (value, meta) {
+                                      return Text(
+                                        value.toString(),
+                                        style: const TextStyle(
+                                          color: Color.fromARGB(255, 255, 255, 255),
+                                          fontSize: 10,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                rightTitles: const AxisTitles(
+                                  sideTitles: SideTitles(
+                                    showTitles: false,
+                                  ),
+                                ),
+                                topTitles: const AxisTitles(
+                                  sideTitles: SideTitles(
+                                    showTitles: false,
+                                  ),
+                                ),
+                              ),
+                              lineBarsData: [
+                                LineChartBarData(
+                                  spots: [
+                                    const FlSpot(0, 3),
+                                    const FlSpot(2.6, 2),
+                                    const FlSpot(4.9, 5),
+                                    const FlSpot(6.8, 2.5),
+                                    const FlSpot(8, 4),
+                                    const FlSpot(9.5, 3),
+                                    const FlSpot(11, 4),
+                                  ],
+                                  isCurved: false,
+                                  barWidth: 3,
+                                  belowBarData: BarAreaData(
+                                    show: true,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   )
