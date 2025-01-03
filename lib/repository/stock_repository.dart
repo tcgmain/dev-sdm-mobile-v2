@@ -25,7 +25,10 @@ class StockRepository {
       ]
     };
 
-    final response = await _provider.post("/getproduct", jsonEncode(inputBody), requestHeaders);
+    final response = await _provider.post("/getproduct", 
+    jsonEncode(inputBody), 
+    requestHeaders);
+    
     return Stock.fromJson(response);
   }
 }

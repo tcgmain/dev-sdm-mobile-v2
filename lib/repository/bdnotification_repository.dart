@@ -19,7 +19,10 @@ class BdnotificationRepository {
        "yterritory^nummer": yterritory_nummer
       };
 
-      final response = await _provider.post("/getorgbyterritory", jsonEncode(inputBody), requestHeaders);
+      final response = await _provider.post(
+        "/getorgbyterritory", 
+        jsonEncode(inputBody), 
+        requestHeaders);
 
       var itemArray = [];
       var resultLength = jsonDecode(jsonEncode(response)).length;

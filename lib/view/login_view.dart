@@ -110,12 +110,12 @@ class _LoginPageState extends State<LoginPage> {
           _isErrorMessageShown = false;
           _isUserDetailsErrorMessageShown = false;
 
-          //  List<double> weeklySummary = [4.40, 8.26, 1.23, 8.00, 2.69, 5.67, 7.31];
-          //   Navigator.of(context).push(MaterialPageRoute(
-          //     builder: (context) => DashboardView(
-          //       weeklySummary: weeklySummary, 
-          //       isShowingMainData: true,
-          //     )));
+           List<double> weeklySummary = [4.40, 8.26, 1.23, 8.00, 2.69, 5.67, 7.31];
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => DashboardView(
+                weeklySummary: weeklySummary, 
+                isShowingMainData: true,
+              )));
 
 
           String? deviceId = await _getId();
@@ -367,54 +367,54 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               );
 
-            case Status.COMPLETED:
-              var userNummer = snapshot.data!.data![0].nummer.toString();
-              var userOrganizationNummer = snapshot.data!.data![0].yorgNummer.toString();
-              var designationNummer = snapshot.data!.data![0].designationNummer.toString();
-              (isDataViewer(designationNummer))
-                  ? WidgetsBinding.instance.addPostFrameCallback((_) {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HomeV2Page(
-                                  username: username,
-                                  userNummer: userNummer,
-                                  userOrganizationNummer: userOrganizationNummer,
-                                  loggedUserNummer: userNummer,
-                                  isTeamMemberUi: false,
-                                  designationNummer: designationNummer,
-                                )),
-                        (Route<dynamic> route) => false,
-                      );
-                    })
-                  : WidgetsBinding.instance.addPostFrameCallback((_) {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HomePage(
-                                  username: username,
-                                  userNummer: userNummer,
-                                  userOrganizationNummer: userOrganizationNummer,
-                                  loggedUserNummer: userNummer,
-                                  isTeamMemberUi: false,
-                                  designationNummer: designationNummer,
-                                )),
-                        (Route<dynamic> route) => false,
-                      );
-                    });
+            // case Status.COMPLETED:
+            //   var userNummer = snapshot.data!.data![0].nummer.toString();
+            //   var userOrganizationNummer = snapshot.data!.data![0].yorgNummer.toString();
+            //   var designationNummer = snapshot.data!.data![0].designationNummer.toString();
+            //   (isDataViewer(designationNummer))
+            //       ? WidgetsBinding.instance.addPostFrameCallback((_) {
+            //           Navigator.pushAndRemoveUntil(
+            //             context,
+            //             MaterialPageRoute(
+            //                 builder: (context) => HomeV2Page(
+            //                       username: username,
+            //                       userNummer: userNummer,
+            //                       userOrganizationNummer: userOrganizationNummer,
+            //                       loggedUserNummer: userNummer,
+            //                       isTeamMemberUi: false,
+            //                       designationNummer: designationNummer,
+            //                     )),
+            //             (Route<dynamic> route) => false,
+            //           );
+            //         })
+            //       : WidgetsBinding.instance.addPostFrameCallback((_) {
+            //           Navigator.pushAndRemoveUntil(
+            //             context,
+            //             MaterialPageRoute(
+            //                 builder: (context) => HomePage(
+            //                       username: username,
+            //                       userNummer: userNummer,
+            //                       userOrganizationNummer: userOrganizationNummer,
+            //                       loggedUserNummer: userNummer,
+            //                       isTeamMemberUi: false,
+            //                       designationNummer: designationNummer,
+            //                     )),
+            //             (Route<dynamic> route) => false,
+            //           );
+            //         });
 
-              usernameController = TextEditingController(text: '');
-              passwordController = TextEditingController(text: '');
-              break;
-            case Status.ERROR:
-              if (!_isUserDetailsErrorMessageShown) {
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  showErrorAlertDialog(context, snapshot.data!.message.toString());
-                  setState(() {
-                    _isErrorMessageShown = true;
-                  });
-                });
-              }
+            //   usernameController = TextEditingController(text: '');
+            //   passwordController = TextEditingController(text: '');
+            //   break;
+            // case Status.ERROR:
+            //   if (!_isUserDetailsErrorMessageShown) {
+            //     WidgetsBinding.instance.addPostFrameCallback((_) {
+            //       showErrorAlertDialog(context, snapshot.data!.message.toString());
+            //       setState(() {
+            //         _isErrorMessageShown = true;
+            //       });
+            //     });
+            //   }
             case Status.COMPLETED:
               // TODO: Handle this case.
             case Status.ERROR:

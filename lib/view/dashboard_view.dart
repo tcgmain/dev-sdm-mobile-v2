@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:sdm/networking/response.dart';
 import 'package:sdm/utils/constants.dart';
+//import 'package:sdm/view/stock_view.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:sdm/blocs/territory_wise_visit_block.dart';
 
 class DashboardView extends StatefulWidget {
   final bool isShowingMainData;
@@ -19,6 +23,12 @@ class DashboardView extends StatefulWidget {
 
 class _DashboardViewState extends State<DashboardView> {
   int touchedIndex = -1;
+  late TooltipBehavior _tooltipBehavior;
+  late TerritoryWiseVisitBlock _territoryWiseVisitBlock;
+  List<TerritoryVisitData> chartData = [];
+
+  
+  
 
   List<Map<String, dynamic>> generateDummyData() {
     return [
@@ -41,20 +51,42 @@ class _DashboardViewState extends State<DashboardView> {
   }
 
   @override
-  Widget build(BuildContext context, ) {
-    final dummyData = generateDummyData();
+  void initState() {
+    _tooltipBehavior = TooltipBehavior(enable: true);
+   _territoryWiseVisitBlock = TerritoryWiseVisitBlock();
+   fetchAndDisplayChartData();
+    super.initState();
+  }
 
-      if (widget.weeklySummary.length < 7) {
-        return const Scaffold(
-          body: Center(
-            child: Text(
-              "Insufficient data provided!",
-              style: TextStyle(fontSize: 18, color: Colors.red),
-            ),
-          ),
+  void fetchAndDisplayChartData() async {
+    _territoryWiseVisitBlock.getTerritoryWiseVisits(
+      "(9722,77,0)",
+       "01/01/2025", 
+       "01/01/2025",
+    );
+
+    _territoryWiseVisitBlock.territoryWiseVisitStream.listen((response) {
+      if (response.status == Status.COMPLETED) {
+        setState(() {
+          chartData = response.data![0].table!
+              .map((tt) => TerritoryVisitData(
+                    tt.tterritoryname ?? "Unknown",
+                    int.tryParse(tt.tnoofvisit ?? "0") ?? 0,
+                  ))
+              .toList();
+        });
+        print("Chart Data Updated: $chartData");
+      } else if (response.status == Status.ERROR) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: ${response.message}')),
         );
+        print("Error: ${response.message}");
       }
+    });
+  }
 
+  @override
+  Widget build(BuildContext context, ) {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -132,52 +164,50 @@ class _DashboardViewState extends State<DashboardView> {
                         ),
                       ),
                    ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Center(
-                      child: Card(
-                        color: const Color.fromARGB(128, 139, 0, 0).withOpacity(0.05), // Adding a card with opacity
-                        elevation: 4,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: SizedBox(
-                            height: 250,
-                            child: PieChart(
-                              PieChartData(
-                                sections: dummyData
-                                    .map(
-                                      (data) => PieChartSectionData(
-                                        color: Colors.primaries[dummyData.indexOf(data) % Colors.primaries.length],
-                                        value: data['value'].toDouble(),
-                                        title: "${data['value']}%",
-                                        radius: touchedIndex == dummyData.indexOf(data) ? 60 : 50,
-                                        titleStyle: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    )
-                                    .toList(),
-                                pieTouchData: PieTouchData(
-                                  touchCallback: (FlTouchEvent event, PieTouchResponse? pieTouchResponse) {
-                                    setState(() {
-                                      if (!event.isInterestedForInteractions ||
-                                          pieTouchResponse == null ||
-                                          pieTouchResponse.touchedSection == null) {
-                                        touchedIndex = -1;
-                                        return;
-                                      }
-                                      touchedIndex = pieTouchResponse.touchedSection!.touchedSectionIndex;
-                                    });
-                                  },
-                                ),
-                              ),
+
+                  SizedBox(
+                    height: 400,
+                    width: double.infinity,
+                    child: Card(
+                      color: const Color.fromARGB(128, 139, 0, 0).withOpacity(0.05), // Adding a card with opacity
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: SfCartesianChart(
+                        tooltipBehavior: _tooltipBehavior,
+                        series: [
+                        BarSeries<TerritoryVisitData, String>(
+                          dataSource: chartData,
+                          xValueMapper: (TerritoryVisitData  data,_) => data.territoryName, 
+                          yValueMapper: (TerritoryVisitData  data,_) => data.visitCount,
+                          dataLabelSettings: const DataLabelSettings(
+                            isVisible: true,
+                            textStyle: TextStyle(
+                              color: CustomColors.textColor,
+                            )
                             ),
                           ),
+                          
+                      ],
+                        primaryXAxis: const CategoryAxis(
+                          labelStyle: TextStyle(
+                            color: CustomColors.textColor,
+                          ),
+                          title: AxisTitle(text: 'Territories', 
+                          textStyle: TextStyle(
+                            color: CustomColors.textColor,
+                          )),
+                        ),
+                        primaryYAxis: const NumericAxis(
+                          edgeLabelPlacement: EdgeLabelPlacement.shift,
+                          labelStyle: TextStyle(
+                            color: CustomColors.textColor,
+                          ),
+                          title: AxisTitle(text: "Number of Visitis",
+                          textStyle: TextStyle(
+                            color: CustomColors.textColor
+                          )),
                         ),
                       ),
                     ),
@@ -390,5 +420,17 @@ class _DashboardViewState extends State<DashboardView> {
         ),
       ),
     );
+  }
+}
+
+class TerritoryVisitData {
+  final String territoryName;
+  final int visitCount;
+
+  TerritoryVisitData(this.territoryName, this.visitCount);
+
+  @override
+  String toString() {
+    return "Territory: $territoryName, Visits: $visitCount";
   }
 }
